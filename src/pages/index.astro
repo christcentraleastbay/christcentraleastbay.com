@@ -1,0 +1,59 @@
+---
+const title = 'Christ Central East Bay';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <style>
+      :root {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        color-scheme: light dark;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-content: center;
+        padding: 2rem;
+        background: #fafaf9;
+        color: #1f2937;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #111827;
+          color: #e5e7eb;
+        }
+      }
+
+      main {
+        max-width: 42rem;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin: 0 0 1rem;
+      }
+
+      p {
+        margin: 0;
+        font-size: 1.125rem;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>{title}</h1>
+      <p>
+        Astro + Cloudflare Pages bootstrap is ready. Edit
+        <code>src/pages/index.astro</code> to start building your site.
+      </p>
+    </main>
+  </body>
+</html>
