@@ -1,0 +1,7 @@
+{
+  "name": "christcentraleastbay",
+  "compatibility_date": "2026-07-03",
+  "assets": {
+    "directory": "./dist"
+  }
+}
