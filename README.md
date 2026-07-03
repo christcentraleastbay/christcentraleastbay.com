@@ -28,4 +28,4 @@ Use the following settings in Cloudflare Pages:
 - **Build command**: `npm run build`
 - **Build output directory**: `dist`
 
-This project uses the `@astrojs/cloudflare` adapter for Cloudflare runtime support.
+Pages are pre-rendered at build time and served as static assets from Cloudflare's edge.
