@@ -1,9 +1,12 @@
 /**
- * Maintenance-mode gate in front of the static site.
+ * Maintenance-mode gate in front of the static site — PRODUCTION ONLY.
  *
  * Because `assets.run_worker_first` is true, this Worker runs on every request
- * before any static asset is served. When maintenance mode is on, the public
- * gets a 503 maintenance page; you can bypass it with a preview token.
+ * before any static asset is served. When maintenance mode is on, requests to
+ * the production domain get a 503 maintenance page; you can bypass it with a
+ * preview token. Branch/version preview deployments (served on workers.dev
+ * hostnames) and local dev are never gated — anyone with a preview URL sees
+ * the real site.
  *
  * Toggle:  set the `MAINTENANCE_MODE` var in wrangler.jsonc ("true"/"false") and
  *          redeploy (push to main). "false" serves the real site to everyone.
@@ -14,13 +17,17 @@
  */
 
 const BYPASS_COOKIE = "ccb_preview";
+const PRODUCTION_DOMAIN = "christcentraleastbay.com";
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+    const isProduction =
+      url.hostname === PRODUCTION_DOMAIN ||
+      url.hostname.endsWith(`.${PRODUCTION_DOMAIN}`);
     const maintenanceOn = String(env.MAINTENANCE_MODE) === "true";
 
-    if (maintenanceOn && !hasBypassCookie(request, env)) {
-      const url = new URL(request.url);
+    if (maintenanceOn && isProduction && !hasBypassCookie(request, env)) {
       const token = env.MAINTENANCE_BYPASS_TOKEN;
 
       // A valid ?preview=<token> sets the bypass cookie, then redirects to a
