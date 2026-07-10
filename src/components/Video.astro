@@ -1,0 +1,31 @@
+---
+/**
+ * Muted, autoplaying ambient video (design-token agnostic — framing and
+ * radius come from the parent, matching how Placeholder is styled).
+ *
+ * Expects `${base}.webm`, `${base}.mp4`, and `${base}-poster.jpg` to exist
+ * under public/. Videos ship without audio tracks, which also exempts them
+ * from browser autoplay blocking.
+ */
+interface Props {
+  base: string;
+  label: string;
+  class?: string;
+}
+
+const { base, label, class: className } = Astro.props;
+---
+
+<video
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="metadata"
+  poster={`${base}-poster.jpg`}
+  aria-label={label}
+  class:list={['h-full w-full object-cover', className]}
+>
+  <source src={`${base}.webm`} type="video/webm" />
+  <source src={`${base}.mp4`} type="video/mp4" />
+</video>
