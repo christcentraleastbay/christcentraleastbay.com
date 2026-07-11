@@ -1,0 +1,30 @@
+---
+interface Props {
+  heading?: string;
+  buttonLabel?: string;
+  buttonHref?: string;
+}
+
+const {
+  heading = 'We can’t wait to meet you.',
+  buttonLabel = 'Plan Your Visit',
+  buttonHref = '/im-new',
+} = Astro.props;
+---
+
+<section class="bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-900">
+  <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
+    <h2 class="text-3xl font-bold sm:text-4xl">
+      {heading}
+    </h2>
+    <p class="mt-4 text-lg opacity-80">
+      <slot>Join us this Sunday — come as you are.</slot>
+    </p>
+    <a
+      href={buttonHref}
+      class="mt-8 inline-block rounded-md bg-stone-50 px-7 py-3 text-sm font-semibold text-stone-900 hover:bg-stone-200 dark:bg-stone-900 dark:text-stone-50 dark:hover:bg-stone-800"
+    >
+      {buttonLabel}
+    </a>
+  </div>
+</section>

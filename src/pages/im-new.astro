@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import CTA from '../components/CTA.astro';
+import Placeholder from '../components/Placeholder.astro';
+import Video from '../components/Video.astro';
+import { service, contact } from '../data/site';
+---
+
+<BaseLayout
+  title="I'm New"
+  description="Planning your first visit to Christ Central East Bay? Here's everything you need to know — service times, location, parking, and kids check-in."
+>
+  <Section eyebrow="I'm New" heading="We can’t wait to meet you!" center>
+    <p class="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      Here’s everything you need to know before your first visit.
+    </p>
+  </Section>
+
+  <Section tinted heading="The Details">
+    <dl class="grid gap-8 md:grid-cols-3">
+      <div>
+        <dt class="font-serif text-lg font-semibold text-stone-900 dark:text-stone-100">Location</dt>
+        <dd class="mt-2 text-stone-600 dark:text-stone-300">
+          <a href={service.mapsUrl} class="link-inline">
+            {service.address}
+          </a>
+          <br />
+          {service.locationNote}
+        </dd>
+      </div>
+      <div>
+        <dt class="font-serif text-lg font-semibold text-stone-900 dark:text-stone-100">Service Times</dt>
+        <dd class="mt-2 text-stone-600 dark:text-stone-300">
+          {service.day}s at {service.time}.
+          <br />
+          {service.refreshmentsNote}
+        </dd>
+      </div>
+      <div>
+        <dt class="font-serif text-lg font-semibold text-stone-900 dark:text-stone-100">Parking</dt>
+        <dd class="mt-2 text-stone-600 dark:text-stone-300">{service.parkingNote}</dd>
+      </div>
+    </dl>
+    <div class="media-frame mt-10 aspect-video max-w-3xl">
+      <Video base="/media/refreshments" label="Refreshments before and after service" />
+    </div>
+  </Section>
+
+  <Section heading="What to Expect">
+    <p class="max-w-3xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      From the moment you arrive, our team will be there to welcome you and help you feel at home.
+    </p>
+    <div class="mt-8 grid gap-6 md:grid-cols-2">
+      <div class="media-frame aspect-4/3">
+        <Video base="/media/welcome" label="Welcome team greeting visitors" />
+      </div>
+      <div class="media-frame aspect-4/3">
+        <Video base="/media/worship" label="Sunday service" />
+      </div>
+    </div>
+  </Section>
+
+  <Section tinted heading="Kids Check-In">
+    <p class="max-w-3xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      Our secure check-in system ensures your child’s safety while they enjoy a fun, engaging
+      experience.
+    </p>
+    <Placeholder label="Photo or video: kids ministry" aspect="16/9" class="mt-8 max-w-3xl" />
+  </Section>
+
+  <CTA heading="Have a question before you visit?" buttonLabel="Contact Us" buttonHref="/contact">
+    Email us at {contact.email} — we’d love to help.
+  </CTA>
+</BaseLayout>

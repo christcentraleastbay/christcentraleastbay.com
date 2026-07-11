@@ -1,59 +1,60 @@
 ---
-const title = 'Christ Central East Bay';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import CTA from '../components/CTA.astro';
+import { site, service, ministries } from '../data/site';
+
+const featuredMinistries = ministries.slice(0, 3);
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
-    <style>
-      :root {
-        font-family: ui-sans-serif, system-ui, sans-serif;
-        color-scheme: light dark;
-      }
+<BaseLayout>
+  <Hero />
 
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-content: center;
-        padding: 2rem;
-        background: #fafaf9;
-        color: #1f2937;
-      }
+  <Section tinted center>
+    <p class="mx-auto max-w-3xl text-lg leading-relaxed text-stone-700 dark:text-stone-300">
+      {site.welcome}
+    </p>
+  </Section>
 
-      @media (prefers-color-scheme: dark) {
-        body {
-          background: #111827;
-          color: #e5e7eb;
-        }
-      }
+  <Section eyebrow="Join us this Sunday" heading="Service Info" center>
+    <dl class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">When</dt>
+        <dd class="mt-1 text-lg font-medium">{service.day}s · {service.time}</dd>
+      </div>
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Where</dt>
+        <dd class="mt-1 text-lg font-medium">
+          <a href={service.mapsUrl} class="link-inline">
+            {service.address}
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Kids</dt>
+        <dd class="mt-1 text-lg font-medium">{service.kidsNote}</dd>
+      </div>
+    </dl>
+  </Section>
 
-      main {
-        max-width: 42rem;
-        text-align: center;
+  <Section tinted eyebrow="Get connected" heading="Ministries">
+    <div class="grid gap-6 md:grid-cols-3">
+      {
+        featuredMinistries.map((m) => (
+          <Card title={m.name} subtitle={'fullName' in m ? m.fullName : undefined}>
+            <p>{m.blurb}</p>
+          </Card>
+        ))
       }
+    </div>
+    <p class="mt-8 text-center">
+      <a href="/connect" class="link-inline font-semibold">
+        See all ministries →
+      </a>
+    </p>
+  </Section>
 
-      h1 {
-        font-size: clamp(2rem, 5vw, 3rem);
-        margin: 0 0 1rem;
-      }
-
-      p {
-        margin: 0;
-        font-size: 1.125rem;
-        line-height: 1.6;
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1>{title}</h1>
-      <p>
-        Astro + Cloudflare Pages bootstrap is ready. Edit
-        <code>src/pages/index.astro</code> to start building your site.
-      </p>
-    </main>
-  </body>
-</html>
+  <CTA />
+</BaseLayout>

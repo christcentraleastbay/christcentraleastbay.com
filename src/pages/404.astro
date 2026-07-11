@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+---
+
+<BaseLayout title="Page Not Found" description="The page you're looking for doesn't exist.">
+  <Section center>
+    <p class="text-sm font-semibold uppercase tracking-widest text-accent-700 dark:text-accent-200">404</p>
+    <h1 class="mt-2 font-serif text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl dark:text-stone-100">
+      Page not found
+    </h1>
+    <p class="mx-auto mt-6 max-w-xl text-lg text-stone-600 dark:text-stone-300">
+      The page you’re looking for doesn’t exist or may have moved.
+    </p>
+    <a
+      href="/"
+      class="btn mt-8"
+    >
+      Back to Home
+    </a>
+  </Section>
+</BaseLayout>

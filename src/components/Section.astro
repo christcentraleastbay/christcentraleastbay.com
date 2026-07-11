@@ -1,0 +1,32 @@
+---
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  tinted?: boolean;
+  center?: boolean;
+}
+
+const { eyebrow, heading, tinted = false, center = false } = Astro.props;
+---
+
+<section class:list={[tinted && 'bg-stone-100 dark:bg-stone-900']}>
+  <div class:list={['mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-16', center && 'text-center']}>
+    {
+      eyebrow && (
+        <p class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">
+          {eyebrow}
+        </p>
+      )
+    }
+    {
+      heading && (
+        <h2 class="mt-2 text-3xl font-bold sm:text-4xl">
+          {heading}
+        </h2>
+      )
+    }
+    <div class:list={[(eyebrow || heading) && 'mt-6']}>
+      <slot />
+    </div>
+  </div>
+</section>

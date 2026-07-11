@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import CTA from '../components/CTA.astro';
+import Video from '../components/Video.astro';
+import { contact } from '../data/site';
+
+/*
+ * v1: no on-site sermon archive yet. When the sermon channel/podcast URL is
+ * available, add the outbound link here (and later, a content collection).
+ */
+---
+
+<BaseLayout
+  title="Resources"
+  description="Missed a Sunday or want to revisit a message? Watch or listen to sermons from Christ Central East Bay."
+>
+  <Section eyebrow="Resources" heading="Hear the Word" center>
+    <p class="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      Missed a Sunday or want to revisit a message? Watch or listen to our latest sermons anytime.
+    </p>
+  </Section>
+
+  <Section tinted center>
+    <div class="media-frame mx-auto mb-10 aspect-video max-w-3xl">
+      <Video base="/media/preaching" label="Preaching at Christ Central East Bay" />
+    </div>
+    <div class="mx-auto max-w-xl rounded-xl border border-dashed border-stone-300 bg-white p-10 dark:border-stone-700 dark:bg-stone-900">
+      <h3 class="font-serif text-xl font-semibold text-stone-900 dark:text-stone-100">
+        Messages coming soon
+      </h3>
+      <p class="mt-3 text-stone-600 dark:text-stone-300">
+        We’re getting our sermon library online. In the meantime, we’d love to see you on Sunday —
+        or <a href={`mailto:${contact.email}`} class="link-inline">reach out</a> and
+        we’ll point you to recent messages.
+      </p>
+    </div>
+  </Section>
+
+  <CTA heading="The best way to hear the Word? Join us." />
+</BaseLayout>
