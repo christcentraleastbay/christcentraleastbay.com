@@ -9,22 +9,31 @@ const ctas = [
 ];
 ---
 
-<section class="border-b border-stone-300 dark:border-stone-700">
-  <div class="mx-auto max-w-4xl px-4 pb-12 pt-20 text-center sm:px-6 sm:pt-24">
-    <p class="text-sm font-semibold text-stone-500 dark:text-stone-400">Welcome to {site.name}</p>
-    <h1 class="mt-4 text-4xl font-bold leading-tight sm:text-5xl">
-      {site.tagline}
-    </h1>
-    <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
-      {site.subtext}
-    </p>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      {ctas.map((cta) => <a href={cta.href} class={cta.primary ? 'btn' : 'btn-outline'}>{cta.label}</a>)}
+<section class="relative overflow-hidden bg-gradient-to-b from-teal-200/40 via-stone-50 to-stone-50 dark:from-sea-800 dark:via-sea-900 dark:to-sea-900">
+  <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-16 pt-16 sm:px-6 sm:pt-24 lg:grid-cols-2">
+    <div>
+      <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent-600 dark:text-accent-200">
+        Welcome to {site.name}
+      </p>
+      <h1 class="mt-4 font-serif text-4xl font-bold uppercase leading-tight tracking-wide text-sea-800 sm:text-6xl dark:text-stone-50">
+        {site.tagline}
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-stone-600 dark:text-stone-100/80">
+        {site.subtext}
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        {ctas.map((cta) => <a href={cta.href} class={cta.primary ? 'btn' : 'btn-outline'}>{cta.label}</a>)}
+      </div>
+    </div>
+    <div class="relative">
+      <div class="absolute -inset-3 -rotate-2 rounded-3xl bg-sand-300/50" aria-hidden="true"></div>
+      <div class="relative aspect-4/3 overflow-hidden rounded-2xl">
+        <Video base="/media/hero" label="Sunday worship at Christ Central East Bay" />
+      </div>
     </div>
   </div>
-  <div class="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
-    <div class="media-frame aspect-[21/9]">
-      <Video base="/media/hero" label="Sunday worship at Christ Central East Bay" />
-    </div>
-  </div>
+  <!-- wave divider -->
+  <svg class="block w-full text-stone-100 dark:text-sea-800" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0,32 C240,64 480,0 720,16 C960,32 1200,64 1440,32 L1440,60 L0,60 Z"></path>
+  </svg>
 </section>

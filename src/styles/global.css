@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
 /*
- * NEUTRAL BASE THEME.
- * This branch carries the shared layer — content (src/data/site.ts), page
- * structure and prose (src/pages), layout, and media — with a deliberately
- * plain grayscale look. Design variants build on top of this branch and
- * replace this file plus the six design components
- * (Header/Hero/Section/Card/CTA/Footer) with their own design language.
- *
- * Contract every variant must honor: define the `accent-*` scale and the
- * semantic classes below (.btn, .btn-outline, .link-inline, .media-frame),
- * because pages and the layout reference them.
+ * Design variant C — "Bay" (inspired by thebay.church).
+ * Coastal bright: sandy light canvas, coral primary with teal and deep
+ * sea-green support, friendly rounded geometry, sunny uppercase headlines.
+ * The `stone` and `accent` scales plus `--font-serif` are the site-wide
+ * semantic tokens — pages reference only these.
  */
 @theme {
-  /* accent → neutral gray by default; variants replace with their color */
-  --color-accent-50: #fafafa;
-  --color-accent-100: #f4f4f5;
-  --color-accent-200: #d4d4d8;
-  --color-accent-600: #52525b;
-  --color-accent-700: #3f3f46;
-  --color-accent-800: #27272a;
-  --color-accent-900: #18181b;
+  --font-sans: "Avenir Next", "Segoe UI", Futura, "Century Gothic",
+    ui-sans-serif, system-ui, sans-serif;
+  /* Display face: rounded geometric (Poppins energy) */
+  --font-serif: "Avenir Next", Futura, "Century Gothic", "Segoe UI",
+    ui-sans-serif, system-ui, sans-serif;
+
+  /* stone → warm sand neutrals */
+  --color-stone-50: #fdfbf7;
+  --color-stone-100: #f8f3e9;
+  --color-stone-200: #efe6d4;
+  --color-stone-300: #e0d3b8;
+  --color-stone-400: #b3a488;
+  --color-stone-500: #8a7d64;
+  --color-stone-600: #6b604c;
+  --color-stone-700: #514a3c;
+  --color-stone-800: #38332a;
+  --color-stone-900: #26221c;
+  --color-stone-950: #171511;
+
+  /* accent → coral (The Bay's hsl(6.5, 78%, 56%)) */
+  --color-accent-50: #fdf1ef;
+  --color-accent-100: #fbdeda;
+  --color-accent-200: #f6b7ae;
+  --color-accent-600: #e2574c;
+  --color-accent-700: #cc4237;
+  --color-accent-800: #a83229;
+  --color-accent-900: #862720;
+
+  /* supporting coastal colors */
+  --color-teal-500: #35bbb2;
+  --color-teal-600: #2a968f;
+  --color-teal-200: #a8e5e0;
+  --color-sea-800: #30594a;
+  --color-sea-900: #24443a;
+  --color-sand-300: #ecd06b;
 }
 
 @layer base {
@@ -34,45 +56,43 @@
 
   @media (prefers-color-scheme: dark) {
     body {
-      @apply bg-stone-950 text-stone-200;
+      @apply bg-sea-900 text-stone-100;
+    }
+  }
+
+  ::selection {
+    @apply bg-teal-200 text-stone-900;
+  }
+}
+
+@layer components {
+  /* Variant-defined button shapes: Bay = pill buttons, friendly and bold */
+  .btn {
+    @apply inline-block rounded-full bg-accent-600 px-7 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-accent-700 hover:shadow-lg;
+  }
+
+  .btn-outline {
+    @apply inline-block rounded-full border-2 border-teal-600 px-7 py-3 text-sm font-bold uppercase tracking-wide text-teal-600 transition-all hover:-translate-y-0.5 hover:bg-teal-600 hover:text-white;
+  }
+  @media (prefers-color-scheme: dark) {
+    .btn-outline {
+      @apply border-teal-200 text-teal-200 hover:bg-teal-200 hover:text-sea-900;
+    }
+  }
+
+  .link-inline {
+    @apply font-semibold text-teal-600 underline decoration-2 underline-offset-4 transition-colors hover:text-accent-600;
+  }
+  @media (prefers-color-scheme: dark) {
+    .link-inline {
+      @apply text-teal-200 hover:text-accent-200;
     }
   }
 }
 
 @layer components {
-  .btn {
-    @apply inline-block rounded-md bg-stone-800 px-6 py-3 text-sm font-semibold text-stone-50 transition-colors hover:bg-stone-700;
-  }
-  @media (prefers-color-scheme: dark) {
-    .btn {
-      @apply bg-stone-200 text-stone-900 hover:bg-stone-300;
-    }
-  }
-
-  .btn-outline {
-    @apply inline-block rounded-md border border-stone-400 px-6 py-3 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-800 hover:text-stone-900;
-  }
-  @media (prefers-color-scheme: dark) {
-    .btn-outline {
-      @apply border-stone-600 text-stone-200 hover:border-stone-300 hover:text-stone-50;
-    }
-  }
-
-  .link-inline {
-    @apply underline underline-offset-4 transition-colors hover:text-stone-950;
-  }
-  @media (prefers-color-scheme: dark) {
-    .link-inline {
-      @apply hover:text-stone-50;
-    }
-  }
-
+  /* Variant framing for site media — Bay: rounded, sunny shadow */
   .media-frame {
-    @apply overflow-hidden rounded-lg border border-stone-300;
-  }
-  @media (prefers-color-scheme: dark) {
-    .media-frame {
-      @apply border-stone-700;
-    }
+    @apply overflow-hidden rounded-2xl shadow-md;
   }
 }

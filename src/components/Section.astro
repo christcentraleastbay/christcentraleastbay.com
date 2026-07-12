@@ -9,23 +9,23 @@ interface Props {
 const { eyebrow, heading, tinted = false, center = false } = Astro.props;
 ---
 
-<section class:list={[tinted && 'bg-stone-100 dark:bg-stone-900']}>
-  <div class:list={['mx-auto max-w-5xl px-4 py-14 sm:px-6 sm:py-16', center && 'text-center']}>
+<section class:list={[tinted && 'bg-stone-100 dark:bg-sea-800']}>
+  <div class:list={['mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20', center && 'text-center']}>
     {
       eyebrow && (
-        <p class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">
+        <p class="text-sm font-bold uppercase tracking-[0.25em] text-accent-600 dark:text-accent-200">
           {eyebrow}
         </p>
       )
     }
     {
       heading && (
-        <h2 class="mt-2 text-3xl font-bold sm:text-4xl">
+        <h2 class="mt-2 font-serif text-3xl font-bold uppercase tracking-wide text-sea-800 sm:text-5xl dark:text-stone-50">
           {heading}
         </h2>
       )
     }
-    <div class:list={[(eyebrow || heading) && 'mt-6']}>
+    <div class:list={[(eyebrow || heading) && 'mt-7']}>
       <slot />
     </div>
   </div>
