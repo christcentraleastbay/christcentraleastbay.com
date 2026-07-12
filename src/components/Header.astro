@@ -4,9 +4,9 @@ import { site, nav } from '../data/site';
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
-<header class="sticky top-0 z-40 border-b border-stone-300 bg-stone-50/95 backdrop-blur dark:border-stone-700 dark:bg-stone-950/95">
-  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-    <a href="/" class="text-lg font-bold" aria-label={`${site.name} home`}>
+<header class="sticky top-0 z-40 border-b border-stone-900/10 bg-stone-50/95 backdrop-blur dark:border-stone-100/10 dark:bg-stone-950/95">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+    <a href="/" class="font-serif text-lg font-bold uppercase tracking-tight sm:text-xl" aria-label={`${site.name} home`}>
       {site.name}
     </a>
 
@@ -23,10 +23,10 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
     </label>
 
     <nav
-      class="absolute left-0 right-0 top-full hidden border-b border-stone-300 bg-stone-50 px-4 pb-4 peer-checked:block md:static md:block md:border-0 md:bg-transparent md:p-0 dark:border-stone-700 dark:bg-stone-950 md:dark:bg-transparent"
+      class="absolute left-0 right-0 top-full hidden border-b border-stone-900/10 bg-stone-50 px-4 pb-4 peer-checked:block md:static md:block md:border-0 md:bg-transparent md:p-0 dark:border-stone-100/10 dark:bg-stone-950 md:dark:bg-transparent"
       aria-label="Main"
     >
-      <ul class="flex flex-col gap-1 pt-2 md:flex-row md:items-center md:gap-5 md:pt-0">
+      <ul class="flex flex-col gap-1 pt-2 md:flex-row md:items-center md:gap-7 md:pt-0">
         {
           nav.map((item) => (
             <li>
@@ -34,8 +34,10 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
                 href={item.href}
                 aria-current={current === item.href ? 'page' : undefined}
                 class:list={[
-                  'block px-3 py-2 text-sm md:px-1 md:py-1',
-                  current === item.href ? 'font-bold underline underline-offset-8' : 'text-stone-600 hover:text-stone-950 dark:text-stone-300 dark:hover:text-stone-50',
+                  'block px-3 py-2 text-xs font-bold uppercase tracking-[0.18em] transition-colors md:px-0 md:py-1',
+                  current === item.href
+                    ? 'text-stone-950 underline decoration-2 underline-offset-8 dark:text-stone-50'
+                    : 'text-stone-500 hover:text-stone-950 dark:text-stone-400 dark:hover:text-stone-50',
                 ]}
               >
                 {item.label}
@@ -43,8 +45,8 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
             </li>
           ))
         }
-        <li class="mt-2 md:mt-0 md:pl-2">
-          <a href="/im-new" class="btn !px-4 !py-2 !text-xs">Plan Your Visit</a>
+        <li class="mt-2 md:mt-0">
+          <a href="/im-new" class="btn !px-5 !py-2.5">Plan Your Visit</a>
         </li>
       </ul>
     </nav>
