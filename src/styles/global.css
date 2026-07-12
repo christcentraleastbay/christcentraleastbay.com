@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
 /*
- * NEUTRAL BASE THEME.
- * This branch carries the shared layer — content (src/data/site.ts), page
- * structure and prose (src/pages), layout, and media — with a deliberately
- * plain grayscale look. Design variants build on top of this branch and
- * replace this file plus the six design components
- * (Header/Hero/Section/Card/CTA/Footer) with their own design language.
- *
- * Contract every variant must honor: define the `accent-*` scale and the
- * semantic classes below (.btn, .btn-outline, .link-inline, .media-frame),
- * because pages and the layout reference them.
+ * Design variant E — "Warm Modern" (evolved from the classic-editorial
+ * Redeemer-inspired look after stakeholder feedback, round 2).
+ * Keeps E's calm, centered, unhurried warmth. Self-hosted Figtree carries
+ * the modern voice (narrower and friendlier than system fallbacks); the
+ * serif token stays a true serif so pages' font-serif accents (mission
+ * quote, detail labels) keep an editorial touch. Accent is a deep forest
+ * green — warm and grounded rather than corporate emerald. The
+ * `stone`/`accent` scales plus `--font-serif` are the site-wide semantic
+ * tokens — pages reference only these.
  */
+
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/figtree-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("/fonts/figtree-latin-italic.woff2") format("woff2");
+}
+
 @theme {
-  /* accent → neutral gray by default; variants replace with their color */
-  --color-accent-50: #fafafa;
-  --color-accent-100: #f4f4f5;
-  --color-accent-200: #d4d4d8;
-  --color-accent-600: #52525b;
-  --color-accent-700: #3f3f46;
-  --color-accent-800: #27272a;
-  --color-accent-900: #18181b;
+  --font-sans: "Figtree", "Segoe UI", ui-sans-serif, system-ui, Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* Serif kept as a true serif — used sparingly as an editorial accent */
+  --font-serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino,
+    "Times New Roman", ui-serif, serif;
+
+  /* stone → clean warm neutrals (warmth without the ivory-yellow cast) */
+  --color-stone-50: #faf9f7;
+  --color-stone-100: #f3f1ed;
+  --color-stone-200: #e5e2db;
+  --color-stone-300: #d1cdc3;
+  --color-stone-400: #a5a094;
+  --color-stone-500: #78746a;
+  --color-stone-600: #5b574e;
+  --color-stone-700: #45423b;
+  --color-stone-800: #302e29;
+  --color-stone-900: #211f1c;
+  --color-stone-950: #141311;
+
+  /* accent → deep forest green: warm, grounded, not corporate */
+  --color-accent-50: #f2f7f4;
+  --color-accent-100: #e0ede5;
+  --color-accent-200: #c2dccb;
+  --color-accent-600: #2e6b4c;
+  --color-accent-700: #275a40;
+  --color-accent-800: #1f4834;
+  --color-accent-900: #183627;
 }
 
 @layer base {
@@ -37,38 +71,49 @@
       @apply bg-stone-950 text-stone-200;
     }
   }
+
+  ::selection {
+    @apply bg-accent-200 text-stone-900;
+  }
 }
 
 @layer components {
+  /* Buttons: gently rounded — modern, but keeps E's dignity (no pills) */
   .btn {
-    @apply inline-block rounded-md bg-stone-800 px-6 py-3 text-sm font-semibold text-stone-50 transition-colors hover:bg-stone-700;
-  }
-  @media (prefers-color-scheme: dark) {
-    .btn {
-      @apply bg-stone-200 text-stone-900 hover:bg-stone-300;
-    }
+    @apply inline-block rounded-lg bg-accent-600 px-7 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-accent-700;
   }
 
   .btn-outline {
-    @apply inline-block rounded-md border border-stone-400 px-6 py-3 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-800 hover:text-stone-900;
+    @apply inline-block rounded-lg border border-stone-300 px-7 py-3 text-sm font-semibold text-stone-700 transition-colors hover:border-accent-600 hover:text-accent-700;
   }
   @media (prefers-color-scheme: dark) {
     .btn-outline {
-      @apply border-stone-600 text-stone-200 hover:border-stone-300 hover:text-stone-50;
+      @apply border-stone-700 text-stone-200 hover:border-accent-200 hover:text-accent-200;
     }
   }
 
   .link-inline {
-    @apply underline underline-offset-4 transition-colors hover:text-stone-950;
+    @apply font-medium text-accent-700 underline decoration-accent-200 decoration-2 underline-offset-4 transition-colors hover:text-accent-800 hover:decoration-accent-600;
   }
   @media (prefers-color-scheme: dark) {
     .link-inline {
-      @apply hover:text-stone-50;
+      @apply text-accent-200 decoration-accent-700 hover:text-accent-100 hover:decoration-accent-200;
     }
   }
 
+  /* Clean modern section label (formerly small-caps tracked eyebrow) */
+  .eyebrow {
+    @apply text-sm font-semibold tracking-wide text-accent-600;
+  }
+  @media (prefers-color-scheme: dark) {
+    .eyebrow {
+      @apply text-accent-200;
+    }
+  }
+
+  /* Framing for site media — soft modern card */
   .media-frame {
-    @apply overflow-hidden rounded-lg border border-stone-300;
+    @apply overflow-hidden rounded-xl border border-stone-200 shadow-sm;
   }
   @media (prefers-color-scheme: dark) {
     .media-frame {

@@ -12,17 +12,18 @@ const {
 } = Astro.props;
 ---
 
-<section class="bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-900">
-  <div class="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 sm:py-20">
-    <h2 class="text-3xl font-bold sm:text-4xl">
+<section class="bg-accent-800">
+  <div class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-24">
+    <h2 class="text-3xl font-bold leading-snug tracking-tight text-stone-50 sm:text-4xl">
       {heading}
     </h2>
-    <p class="mt-4 text-lg opacity-80">
+    <div class="mx-auto mt-5 h-1 w-12 rounded-full bg-accent-200/70" aria-hidden="true"></div>
+    <p class="mt-6 text-lg text-accent-100">
       <slot>Join us this Sunday — come as you are.</slot>
     </p>
     <a
       href={buttonHref}
-      class="mt-8 inline-block rounded-md bg-stone-50 px-7 py-3 text-sm font-semibold text-stone-900 hover:bg-stone-200 dark:bg-stone-900 dark:text-stone-50 dark:hover:bg-stone-800"
+      class="mt-9 inline-block rounded-lg bg-stone-50 px-8 py-3 text-sm font-semibold text-accent-800 shadow-sm transition-colors hover:bg-accent-50"
     >
       {buttonLabel}
     </a>
