@@ -2,9 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Section from '../components/Section.astro';
+import Split from '../components/Split.astro';
 import Card from '../components/Card.astro';
 import CTA from '../components/CTA.astro';
-import { site, service, ministries } from '../data/site';
+import Video from '../components/Video.astro';
+import { site, service, ministries, contact, mission, story } from '../data/site';
 
 const featuredMinistries = ministries.slice(0, 3);
 ---
@@ -12,34 +14,48 @@ const featuredMinistries = ministries.slice(0, 3);
 <BaseLayout>
   <Hero />
 
+  {/* Elevated service band — the single most important practical fact, unmissable */}
+  <section class="bg-accent-700 text-white dark:bg-accent-800">
+    <div class="mx-auto grid max-w-5xl gap-6 px-4 py-8 text-center sm:grid-cols-3 sm:px-6 sm:text-left">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Gather</p>
+        <p class="mt-1 text-xl font-bold">{service.day}s · {service.time}</p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Location</p>
+        <p class="mt-1 text-xl font-bold">
+          <a href={service.mapsUrl} class="underline decoration-white/40 underline-offset-4 hover:decoration-white">
+            {service.address}
+          </a>
+        </p>
+      </div>
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Kids</p>
+        <p class="mt-1 text-xl font-bold">{service.kidsNote}</p>
+      </div>
+    </div>
+  </section>
+
+  {/* Welcome */}
   <Section tinted center>
     <p class="mx-auto max-w-3xl text-lg leading-relaxed text-stone-700 dark:text-stone-300">
       {site.welcome}
     </p>
   </Section>
 
-  <Section eyebrow="Join us this Sunday" heading="Service Info" center>
-    <dl class="mx-auto grid max-w-3xl gap-6 sm:grid-cols-3">
-      <div>
-        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">When</dt>
-        <dd class="mt-1 text-lg font-medium">{service.day}s · {service.time}</dd>
+  {/* About teaser */}
+  <Split eyebrow="About Us" heading="A community to belong to" linkHref="/about" linkLabel="Learn our story">
+    <p>{story}</p>
+    <p class="font-medium text-stone-800 dark:text-stone-100">“{mission}”</p>
+    <Fragment slot="media">
+      <div class="media-frame aspect-video">
+        <Video base="/media/welcome" label="Welcome at Christ Central East Bay" />
       </div>
-      <div>
-        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Where</dt>
-        <dd class="mt-1 text-lg font-medium">
-          <a href={service.mapsUrl} class="link-inline">
-            {service.address}
-          </a>
-        </dd>
-      </div>
-      <div>
-        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Kids</dt>
-        <dd class="mt-1 text-lg font-medium">{service.kidsNote}</dd>
-      </div>
-    </dl>
-  </Section>
+    </Fragment>
+  </Split>
 
-  <Section tinted eyebrow="Get connected" heading="Ministries">
+  {/* Ministries preview */}
+  <Section tinted eyebrow="Get connected" heading="Ministries" center>
     <div class="grid gap-6 md:grid-cols-3">
       {
         featuredMinistries.map((m) => (
@@ -49,11 +65,68 @@ const featuredMinistries = ministries.slice(0, 3);
         ))
       }
     </div>
-    <p class="mt-8 text-center">
-      <a href="/connect" class="link-inline font-semibold">
-        See all ministries →
-      </a>
+    <p class="mt-8">
+      <a href="/connect" class="link-inline font-semibold">See all ministries →</a>
     </p>
+  </Section>
+
+  {/* I'm New teaser */}
+  <Split eyebrow="I'm New" heading="We can’t wait to meet you" linkHref="/im-new" linkLabel="Plan your visit" reverse>
+    <p>
+      Here’s everything you need to know before your first visit. From the moment you arrive, our
+      team will be there to welcome you and help you feel at home — with light refreshments before
+      and after service, plenty of street parking, and a secure kids check-in.
+    </p>
+    <Fragment slot="media">
+      <div class="media-frame aspect-video">
+        <Video base="/media/worship" label="Sunday worship" />
+      </div>
+    </Fragment>
+  </Split>
+
+  {/* Resources — folded from its own page */}
+  <div id="resources" class="scroll-mt-20"></div>
+  <Section eyebrow="Resources" heading="Hear the Word" center>
+    <p class="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      Missed a Sunday or want to revisit a message? Watch or listen to our latest sermons anytime.
+    </p>
+    <div class="media-frame mx-auto mt-8 aspect-video max-w-3xl">
+      <Video base="/media/preaching" label="Preaching at Christ Central East Bay" />
+    </div>
+    <p class="mx-auto mt-6 max-w-xl text-stone-600 dark:text-stone-300">
+      We’re getting our sermon library online. In the meantime, we’d love to see you on Sunday — or
+      <a href={`mailto:${contact.email}`} class="link-inline">reach out</a> and we’ll point you to
+      recent messages.
+    </p>
+  </Section>
+
+  {/* Contact — folded from its own page */}
+  <div id="contact" class="scroll-mt-20"></div>
+  <Section tinted eyebrow="Contact" heading="We’d love to hear from you!" center>
+    <p class="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      Have a question or prayer request? Send us a message and we’ll get back to you.
+    </p>
+    <a href={`mailto:${contact.email}`} class="btn mt-8">Email {contact.email}</a>
+    <dl class="mx-auto mt-12 grid max-w-3xl gap-8 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Address</dt>
+        <dd class="mt-2">
+          <a href={service.mapsUrl} class="link-inline">{service.address}</a>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Social</dt>
+        <dd class="mt-2">
+          <a href={contact.instagramUrl} class="link-inline">{contact.socialHandle}</a>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Email</dt>
+        <dd class="mt-2">
+          <a href={`mailto:${contact.email}`} class="link-inline">{contact.email}</a>
+        </dd>
+      </div>
+    </dl>
   </Section>
 
   <CTA />

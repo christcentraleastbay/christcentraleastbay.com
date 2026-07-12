@@ -116,6 +116,6 @@ export const nav = [
   { label: 'About', href: '/about' },
   { label: "I'm New", href: '/im-new' },
   { label: 'Connect', href: '/connect' },
-  { label: 'Resources', href: '/resources' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Resources', href: '/#resources' },
+  { label: 'Contact', href: '/#contact' },
 ] as const;
