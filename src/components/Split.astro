@@ -1,0 +1,49 @@
+---
+/**
+ * Alternating media/text "split" section — the workhorse of the homepage
+ * hub. Text on one side, media (Video/Placeholder) on the other; set
+ * `reverse` to flip. Uses only token-driven utilities (accent-*, stone-*,
+ * .link-inline, .media-frame) so it adopts each design variant's palette
+ * and type automatically.
+ */
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  reverse?: boolean;
+  tinted?: boolean;
+  linkHref?: string;
+  linkLabel?: string;
+}
+
+const { eyebrow, heading, reverse = false, tinted = false, linkHref, linkLabel } = Astro.props;
+---
+
+<section class:list={[tinted && 'bg-stone-100 dark:bg-stone-900']}>
+  <div class="mx-auto grid max-w-6xl items-center gap-8 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-14">
+    <div class:list={[reverse && 'lg:order-2']}>
+      {
+        eyebrow && (
+          <p class="text-sm font-semibold uppercase tracking-wide text-accent-700 dark:text-accent-200">
+            {eyebrow}
+          </p>
+        )
+      }
+      <h2 class="mt-2 text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl dark:text-stone-100">
+        {heading}
+      </h2>
+      <div class="mt-5 space-y-4 leading-relaxed text-stone-600 dark:text-stone-300">
+        <slot />
+      </div>
+      {
+        linkHref && (
+          <a href={linkHref} class="link-inline mt-6 inline-block font-semibold">
+            {linkLabel} →
+          </a>
+        )
+      }
+    </div>
+    <div class:list={[reverse && 'lg:order-1']}>
+      <slot name="media" />
+    </div>
+  </div>
+</section>
