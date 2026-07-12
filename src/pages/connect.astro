@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import CTA from '../components/CTA.astro';
+import Video from '../components/Video.astro';
+import { ministries, contact } from '../data/site';
+
+const nextSteps = [
+  { label: 'Sign up for our newsletter', href: `mailto:${contact.email}?subject=Newsletter%20signup` },
+  { label: 'Join a group', href: `mailto:${contact.email}?subject=Joining%20a%20community%20group` },
+  { label: 'Become a member', href: `mailto:${contact.email}?subject=Membership` },
+];
+---
+
+<BaseLayout
+  title="Connect"
+  description="Life is better together. Explore the ministries of Christ Central East Bay — kids, youth, college, community groups, and outreach."
+>
+  <Section eyebrow="Connect" heading="Ministries" center>
+    <p class="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      We believe life is better together. Our ministries are designed to help you grow in faith and
+      build meaningful relationships.
+    </p>
+    <div class="media-frame mx-auto mt-10 aspect-video max-w-3xl">
+      <Video base="/media/community" label="Community groups and fellowship" />
+    </div>
+  </Section>
+
+  <Section tinted>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        ministries.map((m) => (
+          <Card title={m.name} subtitle={'fullName' in m ? m.fullName : undefined}>
+            <p>{m.blurb}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section heading="Next Steps" center>
+    <p class="text-lg text-stone-600 dark:text-stone-300">Ready to take your next step?</p>
+    <ul class="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-3">
+      {
+        nextSteps.map((step) => (
+          <li>
+            <a
+              href={step.href}
+              class="btn-outline"
+            >
+              {step.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <CTA heading="Not sure where to start?" buttonLabel="Reach Out" buttonHref="/contact">
+    Tell us a little about yourself and we’ll help you find your place.
+  </CTA>
+</BaseLayout>

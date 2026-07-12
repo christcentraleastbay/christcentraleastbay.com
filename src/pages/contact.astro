@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import CTA from '../components/CTA.astro';
+import { service, contact } from '../data/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with Christ Central East Bay — we'd love to hear from you."
+>
+  <Section eyebrow="Contact" heading="We’d love to hear from you!" center>
+    <p class="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      Have a question or prayer request? Send us a message and we’ll get back to you.
+    </p>
+    <a
+      href={`mailto:${contact.email}`}
+      class="btn mt-8"
+    >
+      Email {contact.email}
+    </a>
+  </Section>
+
+  <Section tinted center>
+    <dl class="mx-auto grid max-w-3xl gap-8 sm:grid-cols-3">
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Address</dt>
+        <dd class="mt-2">
+          <a href={service.mapsUrl} class="link-inline">
+            {service.address}
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Social</dt>
+        <dd class="mt-2">
+          <a href={contact.instagramUrl} class="link-inline">
+            {contact.socialHandle}
+          </a>
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Email</dt>
+        <dd class="mt-2">
+          <a href={`mailto:${contact.email}`} class="link-inline">
+            {contact.email}
+          </a>
+        </dd>
+      </div>
+    </dl>
+  </Section>
+
+  <CTA />
+</BaseLayout>

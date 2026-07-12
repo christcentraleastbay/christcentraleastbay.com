@@ -1,0 +1,52 @@
+---
+import { site, nav } from '../data/site';
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="sticky top-0 z-40 border-b border-stone-300 bg-stone-50/95 backdrop-blur dark:border-stone-700 dark:bg-stone-950/95">
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a href="/" class="text-lg font-bold" aria-label={`${site.name} home`}>
+      {site.name}
+    </a>
+
+    <!-- CSS-only mobile menu: checkbox drives the panel via peer-checked -->
+    <input type="checkbox" id="nav-toggle" class="peer sr-only" />
+    <label
+      for="nav-toggle"
+      class="cursor-pointer p-2 hover:bg-stone-200 md:hidden dark:hover:bg-stone-800"
+      aria-label="Toggle navigation menu"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </label>
+
+    <nav
+      class="absolute left-0 right-0 top-full hidden border-b border-stone-300 bg-stone-50 px-4 pb-4 peer-checked:block md:static md:block md:border-0 md:bg-transparent md:p-0 dark:border-stone-700 dark:bg-stone-950 md:dark:bg-transparent"
+      aria-label="Main"
+    >
+      <ul class="flex flex-col gap-1 pt-2 md:flex-row md:items-center md:gap-5 md:pt-0">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={current === item.href ? 'page' : undefined}
+                class:list={[
+                  'block px-3 py-2 text-sm md:px-1 md:py-1',
+                  current === item.href ? 'font-bold underline underline-offset-8' : 'text-stone-600 hover:text-stone-950 dark:text-stone-300 dark:hover:text-stone-50',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="mt-2 md:mt-0 md:pl-2">
+          <a href="/im-new" class="btn !px-4 !py-2 !text-xs">Plan Your Visit</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

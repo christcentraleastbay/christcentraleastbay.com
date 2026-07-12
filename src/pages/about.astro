@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import CTA from '../components/CTA.astro';
+import Placeholder from '../components/Placeholder.astro';
+import { mission, values, staff, links } from '../data/site';
+---
+
+<BaseLayout
+  title="About Us"
+  description="Christ Central East Bay was commissioned in 2026 as a church plant of Christ Central Presbyterian Church. Learn about our story, mission, values, and staff."
+>
+  <Section eyebrow="About Us" heading="Our Story">
+    <p class="max-w-3xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+      Christ Central East Bay was commissioned in 2026 as a church plant of
+      <a href={links.christCentralSF} class="link-inline">Christ Central</a>
+      Presbyterian Church and the North America Presbytery West (KAPC). As members of the
+      Korean-American Presbyterian Church, we subscribe to the
+      <a href={links.westminsterStandards} class="link-inline">Westminster Standards</a>.
+    </p>
+  </Section>
+
+  <Section tinted heading="Our Mission" center>
+    <blockquote class="mx-auto max-w-3xl font-serif text-2xl font-medium leading-relaxed text-stone-800 dark:text-stone-200">
+      “{mission}”
+    </blockquote>
+  </Section>
+
+  <Section heading="Core Values">
+    <p class="text-stone-600 dark:text-stone-300">We are committed to:</p>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        values.map((v) => (
+          <Card title={v.name}>
+            <p>{v.blurb}</p>
+          </Card>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section tinted heading="Meet the Staff">
+    <Placeholder label="Photo: church staff and leadership" aspect="21/9" class="mb-10" />
+    <dl class="grid gap-8 md:grid-cols-2">
+      {
+        staff.map((group) => (
+          <div>
+            <dt class="font-serif text-lg font-semibold text-stone-900 dark:text-stone-100">
+              {group.role}
+            </dt>
+            <dd class="mt-2 text-stone-600 dark:text-stone-300">{group.people.join(', ')}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </Section>
+
+  <CTA heading="Come see who we are in person." />
+</BaseLayout>
