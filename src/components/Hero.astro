@@ -9,20 +9,42 @@ const ctas = [
 ];
 ---
 
-<section class="border-b border-stone-300 dark:border-stone-700">
-  <div class="mx-auto max-w-4xl px-4 pb-12 pt-20 text-center sm:px-6 sm:pt-24">
-    <p class="text-sm font-semibold text-stone-500 dark:text-stone-400">Welcome to {site.name}</p>
-    <h1 class="mt-4 text-4xl font-bold leading-tight sm:text-5xl">
+<section class="relative overflow-hidden">
+  <!-- Soft radial glow keeps the hero warm without external imagery -->
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--color-accent-100),_transparent_60%)] dark:bg-[radial-gradient(ellipse_at_top,_rgba(217,119,6,0.15),_transparent_60%)]"
+    aria-hidden="true"
+  >
+  </div>
+  <div class="relative mx-auto max-w-4xl px-4 pb-12 pt-24 text-center sm:px-6 sm:pb-16 sm:pt-32">
+    <p class="text-sm font-semibold uppercase tracking-widest text-accent-700 dark:text-accent-200">
+      Welcome to {site.name}
+    </p>
+    <h1 class="mt-4 font-serif text-4xl font-semibold tracking-tight text-stone-900 sm:text-6xl dark:text-stone-50">
       {site.tagline}
     </h1>
     <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
       {site.subtext}
     </p>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      {ctas.map((cta) => <a href={cta.href} class={cta.primary ? 'btn' : 'btn-outline'}>{cta.label}</a>)}
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+      {
+        ctas.map((cta) => (
+          <a
+            href={cta.href}
+            class:list={[
+              'rounded-full px-6 py-3 text-sm font-semibold transition-colors',
+              cta.primary
+                ? 'bg-accent-700 text-white hover:bg-accent-800'
+                : 'border border-stone-300 text-stone-700 hover:border-accent-700 hover:text-accent-700 dark:border-stone-700 dark:text-stone-200 dark:hover:border-accent-200 dark:hover:text-accent-200',
+            ]}
+          >
+            {cta.label}
+          </a>
+        ))
+      }
     </div>
   </div>
-  <div class="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
+  <div class="relative mx-auto max-w-6xl px-4 pb-20 sm:px-6">
     <div class="media-frame aspect-[21/9]">
       <Video base="/media/hero" label="Sunday worship at Christ Central East Bay" />
     </div>

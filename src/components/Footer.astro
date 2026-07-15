@@ -4,38 +4,44 @@ import { site, service, contact, nav } from '../data/site';
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-stone-300 bg-stone-100 dark:border-stone-700 dark:bg-stone-900">
-  <div class="mx-auto grid max-w-5xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
+<footer class="border-t border-stone-200 bg-stone-100 dark:border-stone-800 dark:bg-stone-900">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-3">
     <div>
-      <p class="text-lg font-bold">{site.name}</p>
-      <p class="mt-2 text-sm text-stone-500 dark:text-stone-400">{site.tagline}</p>
+      <p class="font-serif text-lg font-semibold">{site.name}</p>
+      <p class="mt-2 text-sm text-stone-600 dark:text-stone-400">{site.tagline}</p>
     </div>
 
     <div class="text-sm">
-      <p class="text-xs font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">
+      <p class="font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">
         Join us {service.day}s
       </p>
       <p class="mt-2">{service.time}</p>
       <p>
-        <a href={service.mapsUrl} class="link-inline">{service.address}</a>
+        <a href={service.mapsUrl} class="underline hover:text-accent-700 dark:hover:text-accent-200">
+          {service.address}
+        </a>
       </p>
-      <p class="mt-1 text-stone-500 dark:text-stone-400">{service.kidsNote}</p>
+      <p class="mt-1 text-stone-600 dark:text-stone-400">{service.kidsNote}</p>
     </div>
 
     <div class="text-sm">
-      <p class="text-xs font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Get in touch</p>
+      <p class="font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Get in touch</p>
       <p class="mt-2">
-        <a href={`mailto:${contact.email}`} class="link-inline">{contact.email}</a>
+        <a href={`mailto:${contact.email}`} class="underline hover:text-accent-700 dark:hover:text-accent-200">
+          {contact.email}
+        </a>
       </p>
       <p class="mt-1">
-        <a href={contact.instagramUrl} class="link-inline">{contact.socialHandle}</a>
+        <a href={contact.instagramUrl} class="underline hover:text-accent-700 dark:hover:text-accent-200">
+          {contact.socialHandle}
+        </a>
       </p>
       <nav class="mt-4" aria-label="Footer">
         <ul class="flex flex-wrap gap-x-4 gap-y-1">
           {
             nav.map((item) => (
               <li>
-                <a href={item.href} class="text-stone-500 hover:underline dark:text-stone-400">
+                <a href={item.href} class="text-stone-600 hover:underline dark:text-stone-400">
                   {item.label}
                 </a>
               </li>
@@ -45,7 +51,7 @@ const year = new Date().getFullYear();
       </nav>
     </div>
   </div>
-  <div class="border-t border-stone-300 py-4 text-center text-xs text-stone-500 dark:border-stone-700 dark:text-stone-400">
+  <div class="border-t border-stone-200 py-4 text-center text-xs text-stone-500 dark:border-stone-800 dark:text-stone-400">
     © {year} {site.name}
   </div>
 </footer>

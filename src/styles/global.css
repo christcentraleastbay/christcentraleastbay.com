@@ -1,26 +1,22 @@
 @import "tailwindcss";
 
 /*
- * NEUTRAL BASE THEME.
- * This branch carries the shared layer — content (src/data/site.ts), page
- * structure and prose (src/pages), layout, and media — with a deliberately
- * plain grayscale look. Design variants build on top of this branch and
- * replace this file plus the six design components
- * (Header/Hero/Section/Card/CTA/Footer) with their own design language.
- *
- * Contract every variant must honor: define the `accent-*` scale and the
- * semantic classes below (.btn, .btn-outline, .link-inline, .media-frame),
- * because pages and the layout reference them.
+ * Design tokens. The stone/amber pairing keeps the warm, understated feel of
+ * the original placeholder palette (#fafaf9 / #111827) while giving the site
+ * a distinct accent for links, buttons, and eyebrows.
  */
 @theme {
-  /* accent → neutral gray by default; variants replace with their color */
-  --color-accent-50: #fafafa;
-  --color-accent-100: #f4f4f5;
-  --color-accent-200: #d4d4d8;
-  --color-accent-600: #52525b;
-  --color-accent-700: #3f3f46;
-  --color-accent-800: #27272a;
-  --color-accent-900: #18181b;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
 }
 
 @layer base {
@@ -37,42 +33,40 @@
       @apply bg-stone-950 text-stone-200;
     }
   }
+
+  ::selection {
+    @apply bg-accent-200 text-stone-900;
+  }
 }
 
 @layer components {
-  .btn {
-    @apply inline-block rounded-md bg-stone-800 px-6 py-3 text-sm font-semibold text-stone-50 transition-colors hover:bg-stone-700;
+  /* Framing for site media (video/photo) — warm rounded */
+  .media-frame {
+    @apply overflow-hidden rounded-2xl shadow-lg;
   }
-  @media (prefers-color-scheme: dark) {
-    .btn {
-      @apply bg-stone-200 text-stone-900 hover:bg-stone-300;
-    }
+}
+
+@layer components {
+  /* Semantic classes used by the shared pages — amber pill language */
+  .btn {
+    @apply inline-block rounded-full bg-accent-700 px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-800;
   }
 
   .btn-outline {
-    @apply inline-block rounded-md border border-stone-400 px-6 py-3 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-800 hover:text-stone-900;
+    @apply inline-block rounded-full border border-stone-300 px-5 py-2.5 text-sm font-semibold text-stone-700 transition-colors hover:border-accent-700 hover:text-accent-700;
   }
   @media (prefers-color-scheme: dark) {
     .btn-outline {
-      @apply border-stone-600 text-stone-200 hover:border-stone-300 hover:text-stone-50;
+      @apply border-stone-700 text-stone-200 hover:border-accent-200 hover:text-accent-200;
     }
   }
 
   .link-inline {
-    @apply underline underline-offset-4 transition-colors hover:text-stone-950;
+    @apply underline decoration-accent-600 underline-offset-4 transition-colors hover:text-accent-700;
   }
   @media (prefers-color-scheme: dark) {
     .link-inline {
-      @apply hover:text-stone-50;
-    }
-  }
-
-  .media-frame {
-    @apply overflow-hidden rounded-lg border border-stone-300;
-  }
-  @media (prefers-color-scheme: dark) {
-    .media-frame {
-      @apply border-stone-700;
+      @apply hover:text-accent-200;
     }
   }
 }
