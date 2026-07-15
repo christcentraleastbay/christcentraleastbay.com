@@ -54,7 +54,7 @@ export const values = [
 
 export const staff = [
   { role: 'Pastors', people: ['Simon Yang', 'Tony Chang'] },
-  { role: 'Directors', people: ['Eun Sook Park', 'Grace Lee'] },
+  { role: 'Directors', people: ['Eunsook Park', 'Grace Sui'] },
   { role: 'Elder', people: ['Billy Kim'] },
   {
     role: 'Ordained Deacons',
