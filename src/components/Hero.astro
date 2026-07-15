@@ -7,24 +7,33 @@ const ctas = [
   { label: 'Hear the Word', href: '/#resources', primary: false },
   { label: 'Get Connected', href: '/connect', primary: false },
 ];
+
+// Gradient-highlight the final phrase of the tagline
+const words = site.tagline.split(' ');
+const lead = words.slice(0, -1).join(' ');
+const last = words[words.length - 1];
 ---
 
-<section class="border-b border-stone-300 dark:border-stone-700">
-  <div class="mx-auto max-w-4xl px-4 pb-12 pt-20 text-center sm:px-6 sm:pt-24">
-    <p class="text-sm font-semibold text-stone-500 dark:text-stone-400">Welcome to {site.name}</p>
-    <h1 class="mt-4 text-4xl font-bold leading-tight sm:text-5xl">
-      {site.tagline}
+<section class="aurora relative -mt-16 overflow-hidden pt-16">
+  <div class="mx-auto max-w-4xl px-4 pb-12 pt-24 text-center sm:px-6 sm:pt-32">
+    <p class="glass mx-auto inline-block rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide text-stone-600 dark:text-stone-300">
+      Welcome to {site.name}
+    </p>
+    <h1 class="mt-6 text-5xl font-extrabold leading-[1.05] tracking-tighter text-stone-950 sm:text-7xl dark:text-stone-50">
+      {lead} <span class="text-aurora">{last}</span>
     </h1>
-    <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
+    <p class="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
       {site.subtext}
     </p>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
       {ctas.map((cta) => <a href={cta.href} class={cta.primary ? 'btn' : 'btn-outline'}>{cta.label}</a>)}
     </div>
   </div>
-  <div class="mx-auto max-w-5xl px-4 pb-16 sm:px-6">
-    <div class="media-frame aspect-[21/9]">
-      <Video base="/media/hero" label="Sunday worship at Christ Central East Bay" />
+  <div class="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
+    <div class="glass rounded-3xl p-2 shadow-2xl shadow-accent-600/10">
+      <div class="aspect-[21/9] overflow-hidden rounded-2xl">
+        <Video base="/media/hero" label="Sunday worship at Christ Central East Bay" />
+      </div>
     </div>
   </div>
 </section>

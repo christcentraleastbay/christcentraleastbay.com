@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
 /*
- * NEUTRAL BASE THEME.
- * This branch carries the shared layer — content (src/data/site.ts), page
- * structure and prose (src/pages), layout, and media — with a deliberately
- * plain grayscale look. Design variants build on top of this branch and
- * replace this file plus the six design components
- * (Header/Hero/Section/Card/CTA/Footer) with their own design language.
- *
- * Contract every variant must honor: define the `accent-*` scale and the
- * semantic classes below (.btn, .btn-outline, .link-inline, .media-frame),
- * because pages and the layout reference them.
+ * Design variant F — "Aurora" (original, modern gradient).
+ * Current-era web aesthetic: zinc neutrals, violet→indigo→rose aurora
+ * gradients, glassmorphism surfaces, oversized radii, gradient text,
+ * dark-mode-first. The `stone`/`accent` scales plus `--font-serif` are the
+ * site-wide semantic tokens — pages reference only these.
  */
 @theme {
-  /* accent → neutral gray by default; variants replace with their color */
-  --color-accent-50: #fafafa;
-  --color-accent-100: #f4f4f5;
-  --color-accent-200: #d4d4d8;
-  --color-accent-600: #52525b;
-  --color-accent-700: #3f3f46;
-  --color-accent-800: #27272a;
-  --color-accent-900: #18181b;
+  --font-sans: "Inter", "SF Pro Text", "Segoe UI Variable", "Segoe UI",
+    ui-sans-serif, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Display face: same modern grotesque; weight and tracking do the work */
+  --font-serif: "Inter", "SF Pro Display", "Segoe UI Variable Display",
+    "Segoe UI", ui-sans-serif, system-ui, Roboto, sans-serif;
+
+  /* stone → zinc neutrals */
+  --color-stone-50: #fafafa;
+  --color-stone-100: #f4f4f5;
+  --color-stone-200: #e4e4e7;
+  --color-stone-300: #d4d4d8;
+  --color-stone-400: #a1a1aa;
+  --color-stone-500: #71717a;
+  --color-stone-600: #52525b;
+  --color-stone-700: #3f3f46;
+  --color-stone-800: #27272a;
+  --color-stone-900: #18181b;
+  --color-stone-950: #09090b;
+
+  /* accent → violet, the anchor of the aurora */
+  --color-accent-50: #f5f3ff;
+  --color-accent-100: #ede9fe;
+  --color-accent-200: #c4b5fd;
+  --color-accent-600: #7c3aed;
+  --color-accent-700: #6d28d9;
+  --color-accent-800: #5b21b6;
+  --color-accent-900: #4c1d95;
+
+  /* aurora companions */
+  --color-indigo-500: #6366f1;
+  --color-rose-400: #fb7185;
 }
 
 @layer base {
@@ -37,42 +55,68 @@
       @apply bg-stone-950 text-stone-200;
     }
   }
+
+  ::selection {
+    @apply bg-accent-200 text-stone-900;
+  }
 }
 
 @layer components {
+  /* Variant-defined buttons: Aurora = gradient pills */
   .btn {
-    @apply inline-block rounded-md bg-stone-800 px-6 py-3 text-sm font-semibold text-stone-50 transition-colors hover:bg-stone-700;
-  }
-  @media (prefers-color-scheme: dark) {
-    .btn {
-      @apply bg-stone-200 text-stone-900 hover:bg-stone-300;
-    }
+    @apply inline-block rounded-full bg-gradient-to-r from-accent-600 to-indigo-500 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-accent-600/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent-600/30;
   }
 
   .btn-outline {
-    @apply inline-block rounded-md border border-stone-400 px-6 py-3 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-800 hover:text-stone-900;
+    @apply inline-block rounded-full border border-stone-300 px-7 py-3 text-sm font-semibold text-stone-700 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-accent-600 hover:text-accent-600;
   }
   @media (prefers-color-scheme: dark) {
     .btn-outline {
-      @apply border-stone-600 text-stone-200 hover:border-stone-300 hover:text-stone-50;
+      @apply border-stone-700 text-stone-200 hover:border-accent-200 hover:text-accent-200;
     }
   }
 
   .link-inline {
-    @apply underline underline-offset-4 transition-colors hover:text-stone-950;
+    @apply font-medium text-accent-600 underline decoration-accent-200 underline-offset-4 transition-colors hover:text-accent-800 hover:decoration-accent-600;
   }
   @media (prefers-color-scheme: dark) {
     .link-inline {
-      @apply hover:text-stone-50;
+      @apply text-accent-200 decoration-accent-700 hover:text-accent-100 hover:decoration-accent-200;
     }
   }
 
+  /* Aurora backdrop: layered radial gradients, no images */
+  .aurora {
+    background-image:
+      radial-gradient(40% 50% at 20% 10%, color-mix(in srgb, var(--color-accent-600) 22%, transparent), transparent 70%),
+      radial-gradient(35% 45% at 80% 15%, color-mix(in srgb, var(--color-indigo-500) 20%, transparent), transparent 70%),
+      radial-gradient(30% 40% at 55% 45%, color-mix(in srgb, var(--color-rose-400) 14%, transparent), transparent 70%);
+  }
+
+  /* Gradient display text */
+  .text-aurora {
+    @apply bg-gradient-to-r from-accent-600 via-indigo-500 to-rose-400 bg-clip-text text-transparent;
+  }
+
+  /* Glass surface */
+  .glass {
+    @apply border border-stone-900/10 bg-white/60 backdrop-blur-xl;
+  }
+  @media (prefers-color-scheme: dark) {
+    .glass {
+      @apply border-white/10 bg-white/5;
+    }
+  }
+}
+
+@layer components {
+  /* Variant framing for site media — Aurora: glassy rounded */
   .media-frame {
-    @apply overflow-hidden rounded-lg border border-stone-300;
+    @apply overflow-hidden rounded-3xl border border-stone-900/10;
   }
   @media (prefers-color-scheme: dark) {
     .media-frame {
-      @apply border-stone-700;
+      @apply border-white/10;
     }
   }
 }
