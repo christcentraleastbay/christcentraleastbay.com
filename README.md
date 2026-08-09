@@ -14,10 +14,6 @@ address, contact info, staff, and ministries — lives in `src/data/site.ts`; pa
 prose lives in `src/pages/*.astro`. Shared layout is in `src/layouts/BaseLayout.astro`
 and `src/components/`.
 
-While `MAINTENANCE_MODE` is `"true"` (see `wrangler.jsonc`), the deployed site shows
-a "coming soon" page; preview the real site with the bypass token (see
-`worker/index.js`).
-
 ## Development
 
 ```bash
