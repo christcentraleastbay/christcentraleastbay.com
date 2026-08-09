@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
 /*
- * NEUTRAL BASE THEME.
- * This branch carries the shared layer — content (src/data/site.ts), page
- * structure and prose (src/pages), layout, and media — with a deliberately
- * plain grayscale look. Design variants build on top of this branch and
- * replace this file plus the six design components
- * (Header/Hero/Section/Card/CTA/Footer) with their own design language.
- *
- * Contract every variant must honor: define the `accent-*` scale and the
- * semantic classes below (.btn, .btn-outline, .link-inline, .media-frame),
- * because pages and the layout reference them.
+ * Design variant D — "Cornerstone" (inspired by cornerstoneweb.org/livermore).
+ * Dark modern aqua: alternating white and charcoal-slate sections, electric
+ * aqua signature accent (#70f9f4 on dark, #0692b2 on light — both lifted from
+ * the source site's CSS), neutral humanist sans, confident sentence-case
+ * headings. The `stone`/`accent` scales plus `--font-serif` are the site-wide
+ * semantic tokens — pages reference only these.
  */
 @theme {
-  /* accent → neutral gray by default; variants replace with their color */
-  --color-accent-50: #fafafa;
-  --color-accent-100: #f4f4f5;
-  --color-accent-200: #d4d4d8;
-  --color-accent-600: #52525b;
-  --color-accent-700: #3f3f46;
-  --color-accent-800: #27272a;
-  --color-accent-900: #18181b;
+  --font-sans: "Open Sans", "Segoe UI", Roboto, ui-sans-serif, system-ui,
+    "Helvetica Neue", Arial, sans-serif;
+  /* Display face: same humanist sans, weight does the talking */
+  --font-serif: "Open Sans", "Segoe UI", Roboto, ui-sans-serif, system-ui,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* stone → charcoal slate (from #2f2f2f / #4a5464 / #728197) */
+  --color-stone-50: #ffffff;
+  --color-stone-100: #f4f6f8;
+  --color-stone-200: #e3e7ec;
+  --color-stone-300: #c6ccd5;
+  --color-stone-400: #9aa5b3;
+  --color-stone-500: #728197;
+  --color-stone-600: #4a5464;
+  --color-stone-700: #3c4450;
+  --color-stone-800: #2f2f2f;
+  --color-stone-900: #242424;
+  --color-stone-950: #181818;
+
+  /* accent → electric aqua family */
+  --color-accent-50: #ecfeff;
+  --color-accent-100: #d3fdfb;
+  --color-accent-200: #70f9f4;
+  --color-accent-600: #0692b2;
+  --color-accent-700: #067a95;
+  --color-accent-800: #05637a;
+  --color-accent-900: #044d5f;
 }
 
 @layer base {
@@ -37,42 +52,45 @@
       @apply bg-stone-950 text-stone-200;
     }
   }
+
+  ::selection {
+    @apply bg-accent-200 text-stone-900;
+  }
 }
 
 @layer components {
+  /* Variant-defined buttons: Cornerstone = confident rounded rectangles */
   .btn {
-    @apply inline-block rounded-md bg-stone-800 px-6 py-3 text-sm font-semibold text-stone-50 transition-colors hover:bg-stone-700;
+    @apply inline-block rounded-md bg-accent-600 px-7 py-3 text-sm font-bold text-white transition-colors hover:bg-accent-700;
   }
   @media (prefers-color-scheme: dark) {
     .btn {
-      @apply bg-stone-200 text-stone-900 hover:bg-stone-300;
+      @apply bg-accent-200 text-stone-900 hover:bg-accent-100;
     }
   }
 
   .btn-outline {
-    @apply inline-block rounded-md border border-stone-400 px-6 py-3 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-800 hover:text-stone-900;
+    @apply inline-block rounded-md border-2 border-stone-600 px-7 py-3 text-sm font-bold text-stone-700 transition-colors hover:border-accent-600 hover:text-accent-600;
   }
   @media (prefers-color-scheme: dark) {
     .btn-outline {
-      @apply border-stone-600 text-stone-200 hover:border-stone-300 hover:text-stone-50;
+      @apply border-stone-400 text-stone-200 hover:border-accent-200 hover:text-accent-200;
     }
   }
 
   .link-inline {
-    @apply underline underline-offset-4 transition-colors hover:text-stone-950;
+    @apply font-semibold text-accent-600 underline underline-offset-4 transition-colors hover:text-accent-800;
   }
   @media (prefers-color-scheme: dark) {
     .link-inline {
-      @apply hover:text-stone-50;
+      @apply text-accent-200 hover:text-accent-100;
     }
   }
+}
 
+@layer components {
+  /* Variant framing for site media — Cornerstone: modern rounded, deep shadow */
   .media-frame {
-    @apply overflow-hidden rounded-lg border border-stone-300;
-  }
-  @media (prefers-color-scheme: dark) {
-    .media-frame {
-      @apply border-stone-700;
-    }
+    @apply overflow-hidden rounded-xl shadow-lg;
   }
 }
