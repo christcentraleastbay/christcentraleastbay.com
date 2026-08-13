@@ -35,7 +35,6 @@ export const contact = {
 
 export const links = {
   christCentralSF: 'http://christcentralsf.com',
-  giving: 'https://christcentraleastbay.churchcenter.com/giving',
   westminsterStandards: 'https://westminsterstandards.org/',
 } as const;
 
@@ -118,6 +117,6 @@ export const nav = [
   { label: "I'm New", href: '/im-new' },
   { label: 'Connect', href: '/connect' },
   { label: 'Resources', href: '/#resources' },
-  { label: 'Give', href: links.giving },
+  { label: 'Give', href: '/give' },
   { label: 'Contact', href: '/#contact' },
 ] as const;
