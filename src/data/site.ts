@@ -73,7 +73,8 @@ export const staff = [
   {
     role: 'Deacons',
     people: [
-      'Christine Lee',
+      'Justine Won',
+      'Josiah Song',
       'Hamee Ha',
       'Katrina Kim',
       'Luxi Choi',
