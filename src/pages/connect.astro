@@ -4,13 +4,13 @@ import Section from '../components/Section.astro';
 import Card from '../components/Card.astro';
 import CTA from '../components/CTA.astro';
 import Video from '../components/Video.astro';
-import { ministries, contact, links } from '../data/site';
+import { ministries, links } from '../data/site';
 
 const nextSteps = [
   {
     label: 'Sign up for our newsletter',
-    href: `mailto:${contact.email}?subject=Newsletter%20signup`,
-    newTab: false,
+    href: links.newsletterSignup,
+    newTab: true,
   },
   { label: 'Join a Group', href: links.churchCenter, newTab: true },
 ];
