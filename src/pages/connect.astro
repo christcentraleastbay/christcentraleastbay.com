@@ -4,16 +4,8 @@ import Section from '../components/Section.astro';
 import Card from '../components/Card.astro';
 import CTA from '../components/CTA.astro';
 import Video from '../components/Video.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 import { ministries, links } from '../data/site';
-
-const nextSteps = [
-  {
-    label: 'Sign up for our newsletter',
-    href: links.newsletterSignup,
-    newTab: true,
-  },
-  { label: 'Join a Group', href: links.churchCenter, newTab: true },
-];
 ---
 
 <BaseLayout
@@ -44,22 +36,30 @@ const nextSteps = [
 
   <Section heading="Next Steps" center>
     <p class="text-lg text-stone-600 dark:text-stone-300">Ready to take your next step?</p>
-    <ul class="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-3">
-      {
-        nextSteps.map((step) => (
-          <li>
+    <div class="mx-auto mt-8 grid max-w-4xl gap-6 text-left md:grid-cols-2">
+      <Card title="Stay Connected">
+        <p>Get church news and updates delivered to your inbox.</p>
+        <NewsletterSignup
+          userId="047ff9e9e2b1f27e6c0fdcbfd"
+          audienceId="56bf90e0d1"
+        />
+      </Card>
+      <Card title="Join a Group">
+        <p>
+          Find community, grow in faith, and build meaningful relationships in a smaller setting.
+        </p>
+        <p class="mt-6">
             <a
-              href={step.href}
-              target={step.newTab ? '_blank' : undefined}
-              rel={step.newTab ? 'noopener noreferrer' : undefined}
+              href={links.churchCenter}
+              target="_blank"
+              rel="noopener noreferrer"
               class="btn-outline"
             >
-              {step.label}
+              Join a Group
             </a>
-          </li>
-        ))
-      }
-    </ul>
+        </p>
+      </Card>
+    </div>
   </Section>
 
   <CTA heading="Not sure where to start?" buttonLabel="Reach Out" buttonHref="/#contact">
