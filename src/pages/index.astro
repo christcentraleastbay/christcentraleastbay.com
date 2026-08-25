@@ -6,6 +6,7 @@ import Split from '../components/Split.astro';
 import Card from '../components/Card.astro';
 import CTA from '../components/CTA.astro';
 import Video from '../components/Video.astro';
+import GoogleMap from '../components/GoogleMap.astro';
 import { site, service, ministries, contact, mission, story } from '../data/site';
 
 const featuredMinistries = ministries.slice(0, 3);
@@ -127,6 +128,9 @@ const featuredMinistries = ministries.slice(0, 3);
         </dd>
       </div>
     </dl>
+    <div class="media-frame mx-auto mt-10 aspect-video max-w-3xl overflow-hidden">
+      <GoogleMap address={service.address} label={`Christ Central East Bay at ${service.address}`} />
+    </div>
   </Section>
 
   <CTA />
