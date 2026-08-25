@@ -35,6 +35,7 @@ export const contact = {
 
 export const links = {
   christCentralSF: 'http://christcentralsf.com',
+  churchCenter: 'https://christcentraleastbay.churchcenter.com/',
   westminsterStandards: 'https://westminsterstandards.org/',
 } as const;
 

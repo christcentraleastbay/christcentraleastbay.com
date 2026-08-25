@@ -4,12 +4,15 @@ import Section from '../components/Section.astro';
 import Card from '../components/Card.astro';
 import CTA from '../components/CTA.astro';
 import Video from '../components/Video.astro';
-import { ministries, contact } from '../data/site';
+import { ministries, contact, links } from '../data/site';
 
 const nextSteps = [
-  { label: 'Sign up for our newsletter', href: `mailto:${contact.email}?subject=Newsletter%20signup` },
-  { label: 'Join a group', href: `mailto:${contact.email}?subject=Joining%20a%20community%20group` },
-  { label: 'Become a member', href: `mailto:${contact.email}?subject=Membership` },
+  {
+    label: 'Sign up for our newsletter',
+    href: `mailto:${contact.email}?subject=Newsletter%20signup`,
+    newTab: false,
+  },
+  { label: 'Join a Group', href: links.churchCenter, newTab: true },
 ];
 ---
 
@@ -47,6 +50,8 @@ const nextSteps = [
           <li>
             <a
               href={step.href}
+              target={step.newTab ? '_blank' : undefined}
+              rel={step.newTab ? 'noopener noreferrer' : undefined}
               class="btn-outline"
             >
               {step.label}
