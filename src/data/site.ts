@@ -78,7 +78,6 @@ export const staff = [
     people: [
       'Justine Won',
       'Josiah Song',
-      'Hamee Ha',
       'Katrina Kim',
       'Luxi Choi',
       'Minji Lee',
