@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import Card from '../components/Card.astro';
 import CTA from '../components/CTA.astro';
-import Placeholder from '../components/Placeholder.astro';
 import { mission, values, staff, links } from '../data/site';
 ---
 
@@ -41,7 +40,18 @@ import { mission, values, staff, links } from '../data/site';
   </Section>
 
   <Section tinted heading="Meet the Staff">
-    <Placeholder label="Photo: church staff and leadership" aspect="21/9" class="mb-10" />
+    <picture>
+      <source srcset="/images/staff-leadership.webp" type="image/webp" />
+      <img
+        src="/images/staff-leadership.jpg"
+        alt="Christ Central East Bay staff and leadership"
+        width="1680"
+        height="720"
+        class="media-frame mb-10 h-auto w-full"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
     <dl class="grid gap-8 md:grid-cols-2">
       {
         staff.map((group) => (
