@@ -55,7 +55,7 @@ import { mission, values, staff, links } from '../data/site';
     <dl class="grid gap-8 md:grid-cols-6">
       {
         staff.map((group, index) => (
-          <div class={index < 3 ? 'md:col-span-2' : 'md:col-span-3'}>
+          <div class:list={['text-center', index < 3 ? 'md:col-span-2' : 'md:col-span-3']}>
             <dt class="font-serif text-lg font-semibold text-stone-900 dark:text-stone-100">
               {group.role}
             </dt>
