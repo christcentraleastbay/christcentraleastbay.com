@@ -4,18 +4,13 @@
  * or contact details change.
  */
 
-const formatTime = (totalMinutes: number) => {
-  const minutesInDay = 24 * 60;
-  const normalizedMinutes = ((totalMinutes % minutesInDay) + minutesInDay) % minutesInDay;
-  const hour = Math.floor(normalizedMinutes / 60);
-  const minute = normalizedMinutes % 60;
-  const displayHour = hour % 12 || 12;
-  const period = hour < 12 ? 'AM' : 'PM';
-
-  return `${displayHour}:${minute.toString().padStart(2, '0')} ${period}`;
-};
-
-const serviceStartTime = 10 * 60;
+const serviceStartTime = new Date('1970-01-01T10:00:00Z');
+const recommendedArrivalTime = new Date(serviceStartTime.getTime() - 15 * 60 * 1000);
+const timeFormatter = new Intl.DateTimeFormat('en-US', {
+  hour: 'numeric',
+  minute: '2-digit',
+  timeZone: 'UTC',
+});
 
 export const site = {
   name: 'Christ Central East Bay',
@@ -31,8 +26,8 @@ export const site = {
 
 export const service = {
   day: 'Sunday',
-  time: formatTime(serviceStartTime),
-  recommendedArrivalTime: formatTime(serviceStartTime - 15),
+  time: timeFormatter.format(serviceStartTime),
+  recommendedArrivalTime: timeFormatter.format(recommendedArrivalTime),
   address: '1821 Catalina Ave, Berkeley, CA',
   mapsUrl: 'https://maps.google.com/?q=1821+Catalina+Ave,+Berkeley,+CA',
   kidsNote: 'Kids programs available!',
