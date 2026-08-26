@@ -19,6 +19,7 @@ export const site = {
 export const service = {
   day: 'Sunday',
   time: '10:00 AM',
+  recommendedArrivalTime: '9:45 AM',
   address: '1821 Catalina Ave, Berkeley, CA',
   mapsUrl: 'https://maps.google.com/?q=1821+Catalina+Ave,+Berkeley,+CA',
   kidsNote: 'Kids programs available!',
