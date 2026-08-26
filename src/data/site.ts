@@ -4,6 +4,15 @@
  * or contact details change.
  */
 
+const serviceTimeZone = 'America/Los_Angeles';
+const serviceStartTime = new Date('1970-01-04T10:00:00-08:00');
+const recommendedArrivalTime = new Date(serviceStartTime.getTime() - 15 * 60 * 1000);
+const timeFormatter = new Intl.DateTimeFormat('en-US', {
+  hour: 'numeric',
+  minute: '2-digit',
+  timeZone: serviceTimeZone,
+});
+
 export const site = {
   name: 'Christ Central East Bay',
   shortName: 'CCEB',
@@ -18,7 +27,9 @@ export const site = {
 
 export const service = {
   day: 'Sunday',
-  time: '10:00 AM',
+  timeZone: serviceTimeZone,
+  time: timeFormatter.format(serviceStartTime),
+  recommendedArrivalTime: timeFormatter.format(recommendedArrivalTime),
   address: '1821 Catalina Ave, Berkeley, CA',
   mapsUrl: 'https://maps.google.com/?q=1821+Catalina+Ave,+Berkeley,+CA',
   kidsNote: 'Kids programs available!',
