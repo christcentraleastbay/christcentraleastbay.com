@@ -6,7 +6,7 @@ An [Astro 7](https://astro.build/) static site deployed on
 
 ## Requirements
 
-- Node.js 22.12.0+
+- Node.js 22.23.2+
 
 ## Editing the site
 
