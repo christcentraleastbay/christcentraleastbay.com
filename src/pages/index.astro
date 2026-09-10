@@ -1,4 +1,6 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import congregation from '../assets/congregation.webp';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Section from '../components/Section.astro';
@@ -10,6 +12,7 @@ import GoogleMap from '../components/GoogleMap.astro';
 import { site, service, ministries, contact, mission, story } from '../data/site';
 
 const featuredMinistries = ministries.slice(0, 3);
+const congregationLarge = await getImage({ src: congregation, width: 2800, format: 'webp', quality: 85 });
 ---
 
 <BaseLayout>
@@ -42,6 +45,30 @@ const featuredMinistries = ministries.slice(0, 3);
     <p class="mx-auto max-w-3xl text-lg leading-relaxed text-stone-700 dark:text-stone-300">
       {site.welcome}
     </p>
+    <figure class="mt-10">
+      <a
+        href={congregationLarge.src}
+        class="media-frame block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-600"
+        aria-label="View a larger photo of our church family"
+      >
+        <Image
+          src={congregation}
+          alt="The Christ Central East Bay congregation gathered together in the sanctuary, with children seated in front."
+          width={2400}
+          widths={[640, 960, 1440, 1920, 2400]}
+          sizes="(min-width: 1152px) 1104px, (min-width: 640px) calc(100vw - 48px), calc(100vw - 32px)"
+          format="webp"
+          quality={85}
+          loading="lazy"
+          decoding="async"
+          class="aspect-2/1 h-auto w-full object-cover object-bottom"
+        />
+      </a>
+      <figcaption class="mt-4 text-sm text-stone-600 dark:text-stone-300">
+        Our Christ Central East Bay church family.
+        <a href={congregationLarge.src} class="link-inline ml-1">View larger photo</a>
+      </figcaption>
+    </figure>
   </Section>
 
   {/* About teaser */}
