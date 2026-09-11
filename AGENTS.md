@@ -1,5 +1,10 @@
 # Repository Guidelines
 
+## Leadership lists
+
+- Keep the Directors, Elder/Elders, Deacons, and Ordained Deacons `people` arrays in `src/data/site.ts` alphabetized by displayed name (first name, then last name for ties), using English alphabetical order.
+- Preserve this order when adding or changing names, and check each affected group before submitting. Keep the existing role order and pastor order unless explicitly asked to change them.
+
 ## Image assets
 
 - Commit web-ready assets only. Keep camera originals, RAW files, and full-resolution source photos outside the repository, including its Git history.
