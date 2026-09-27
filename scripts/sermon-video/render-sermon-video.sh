@@ -7,12 +7,15 @@
 #
 # Requires: ffmpeg and ffprobe (7.x) on PATH.
 #
-# Audio pipeline (speech-oriented, no pumping):
+# Audio pipeline (speech-oriented). Service recordings often mix loud worship
+# music with a much quieter sermon, so the chain levels sections as well as
+# normalizing the whole file:
 #   pass 1  measure the source (EBU R128 integrated loudness + true peak)
-#   pass 2  high-pass -> gain -> gentle top-only compressor -> peak limiter,
-#           measured again (up to three quick iterations) to calibrate the
-#           gain so the result lands on the target loudness
-#   pass 3  same chain with the calibrated gain, encoded with the video
+#   pass 2  high-pass -> pre-gain (peaks to -3 dB) -> 3:1 compressor that
+#           tames speech peaks -> section leveler (dynaudnorm, 7.5 s window)
+#           -> calibration trim -> peak limiter; measured again (up to three
+#           quick iterations) so the result lands on the target loudness
+#   pass 3  same chain with the calibrated trim, encoded with the video
 #
 # Video: 1920x1080 H.264 (yuv420p), 30 fps, AAC 192 kbps 48 kHz, faststart.
 
@@ -32,7 +35,9 @@ mkdir -p "$WORK"
 # Tunables (override via environment).
 TARGET_I="${TARGET_I:--14}"        # integrated loudness target (LUFS); YouTube normalizes to about -14
 LIMIT_DB="${LIMIT_DB:--2}"         # sample-peak limiter ceiling (dB), leaves margin for inter-sample peaks
-COMP="${COMP:-acompressor=threshold=-6dB:ratio=3:attack=2:release=100:knee=3}" # only tames the loudest peaks
+PREGAIN_PEAK="${PREGAIN_PEAK:--3}" # pre-gain places the source's true peak here (dB) before compression
+COMP="${COMP:-acompressor=threshold=-30dB:ratio=3:attack=5:release=100:knee=6}"
+LEVELER="${LEVELER:-dynaudnorm=f=500:g=15:p=0.9:m=30:r=0.2}" # evens out quiet vs loud sections
 CAL_TOLERANCE="${CAL_TOLERANCE:-0.3}" # stop calibrating within this many LU of target
 WAVE_COLOR="${WAVE_COLOR:-#F7C15E}" # gold from the artwork
 WAVE_HEIGHT="${WAVE_HEIGHT:-230}"
@@ -48,9 +53,6 @@ log() { printf '[%s] %s\n' "$(date +%H:%M:%S)" "$*" >&2; }
 ebur_value() { awk -v k="$2" '$1 == k { v = $2 } END { print v }' "$1"; }
 
 LIMIT_LIN=$(awk -v db="$LIMIT_DB" 'BEGIN { printf "%.4f", 10 ^ (db / 20) }')
-chain() { # chain <gain-dB>
-  printf 'highpass=f=80,volume=%sdB,%s,alimiter=limit=%s:attack=5:release=50:level=false' "$1" "$COMP" "$LIMIT_LIN"
-}
 MEASURE="ebur128=peak=true:framelog=quiet"
 
 # --- Pass 1: measure the source -------------------------------------------
@@ -61,13 +63,19 @@ IN_TP=$(ebur_value "$WORK/measure1.log" "Peak:")
 IN_LRA=$(ebur_value "$WORK/measure1.log" "LRA:")
 log "source: integrated ${IN_I} LUFS, true peak ${IN_TP} dBTP, LRA ${IN_LRA} LU"
 
-# --- Pass 2: calibrate the gain through the processing chain ---------------
-# First guess: straight gain to target. Each iteration measures the chain's
-# output and corrects the gain (secant step once two points are known).
-G=$(awk -v t="$TARGET_I" -v i="$IN_I" 'BEGIN { printf "%.2f", t - i }')
+PREGAIN=$(awk -v tp="$IN_TP" -v goal="$PREGAIN_PEAK" 'BEGIN { printf "%.2f", goal - tp }')
+chain() { # chain <trim-dB>
+  printf 'highpass=f=80,volume=%sdB,%s,%s,volume=%sdB,alimiter=limit=%s:attack=5:release=50:level=false' \
+    "$PREGAIN" "$COMP" "$LEVELER" "$1" "$LIMIT_LIN"
+}
+
+# --- Pass 2: calibrate the trim through the processing chain ---------------
+# Start from no trim; each iteration measures the chain's output and corrects
+# the trim (secant step once two points are known).
+G="0.00"
 PREV_G=""; PREV_I=""
 for iter in 1 2 3; do
-  log "pass 2/3: calibrating, iteration ${iter} (gain ${G} dB)"
+  log "pass 2/3: calibrating, iteration ${iter} (pre-gain ${PREGAIN} dB, trim ${G} dB)"
   ffmpeg -hide_banner -nostats -y -i "$INPUT" -af "$(chain "$G"),$MEASURE" -f null - 2> "$WORK/measure2-${iter}.log"
   TRIAL_I=$(ebur_value "$WORK/measure2-${iter}.log" "I:")
   TRIAL_LRA=$(ebur_value "$WORK/measure2-${iter}.log" "LRA:")
@@ -82,7 +90,7 @@ for iter in 1 2 3; do
   PREV_G="$G"; PREV_I="$TRIAL_I"; G="$NEXT_G"
 done
 G1="$G"
-log "final gain ${G1} dB"
+log "final trim ${G1} dB"
 
 # --- Pass 3: encode the video ---------------------------------------------
 log "pass 3/3: encoding video -> $OUTPUT"
