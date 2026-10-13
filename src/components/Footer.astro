@@ -1,5 +1,6 @@
 ---
 import { site, service, contact, nav } from '../data/site';
+import SocialIcon from './SocialIcon.astro';
 
 const year = new Date().getFullYear();
 ---
@@ -37,10 +38,16 @@ const year = new Date().getFullYear();
         <a href={`mailto:${contact.email}`} class="underline underline-offset-4 hover:text-accent-200">{contact.email}</a>
       </p>
       <p class="mt-1">
-        <a href={contact.instagramUrl} class="underline underline-offset-4 hover:text-accent-200">{contact.socialHandle}</a>
+        <a href={contact.instagramUrl} class="inline-flex items-center gap-1.5 hover:text-accent-200">
+          <SocialIcon name="instagram" class="h-4 w-4" />
+          <span class="underline underline-offset-4">Instagram</span>
+        </a>
       </p>
       <p class="mt-1">
-        <a href={contact.youtubeUrl} class="underline underline-offset-4 hover:text-accent-200">YouTube</a>
+        <a href={contact.youtubeUrl} class="inline-flex items-center gap-1.5 hover:text-accent-200">
+          <SocialIcon name="youtube" class="h-4 w-4" />
+          <span class="underline underline-offset-4">YouTube</span>
+        </a>
       </p>
       <nav class="mt-5" aria-label="Footer">
         <ul class="flex flex-wrap gap-x-4 gap-y-1">

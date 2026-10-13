@@ -9,6 +9,7 @@ import Card from '../components/Card.astro';
 import CTA from '../components/CTA.astro';
 import Video from '../components/Video.astro';
 import GoogleMap from '../components/GoogleMap.astro';
+import SocialIcon from '../components/SocialIcon.astro';
 import { site, service, ministries, contact, mission, story } from '../data/site';
 
 const featuredMinistries = ministries.slice(0, 3);
@@ -138,10 +139,22 @@ const congregationLarge = await getImage({ src: congregation, width: 2800, forma
       <div>
         <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Social</dt>
         <dd class="mt-2">
-          <a href={contact.instagramUrl} class="link-inline">{contact.socialHandle}</a>
+          <a
+            href={contact.instagramUrl}
+            class="inline-flex items-center gap-1.5 font-semibold text-accent-600 transition-colors hover:text-accent-800 dark:text-accent-200 dark:hover:text-accent-100"
+          >
+            <SocialIcon name="instagram" class="h-4 w-4" />
+            <span class="underline underline-offset-4">Instagram</span>
+          </a>
         </dd>
         <dd class="mt-1">
-          <a href={contact.youtubeUrl} class="link-inline">YouTube</a>
+          <a
+            href={contact.youtubeUrl}
+            class="inline-flex items-center gap-1.5 font-semibold text-accent-600 transition-colors hover:text-accent-800 dark:text-accent-200 dark:hover:text-accent-100"
+          >
+            <SocialIcon name="youtube" class="h-4 w-4" />
+            <span class="underline underline-offset-4">YouTube</span>
+          </a>
         </dd>
       </div>
       <div>
