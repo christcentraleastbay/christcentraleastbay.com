@@ -42,6 +42,7 @@ export const contact = {
   email: 'office@christcentraleastbay.com',
   socialHandle: '@Christcentraleastbay',
   instagramUrl: 'https://www.instagram.com/christcentraleastbay',
+  youtubeUrl: 'https://youtube.com/@christcentraleastbay',
 } as const;
 
 export const links = {

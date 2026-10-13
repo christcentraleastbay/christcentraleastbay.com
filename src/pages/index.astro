@@ -113,15 +113,12 @@ const congregationLarge = await getImage({ src: congregation, width: 2800, forma
   <Section eyebrow="Resources" heading="Hear the Word" center>
     <p class="mx-auto max-w-2xl text-lg leading-relaxed text-stone-600 dark:text-stone-300">
       Missed a Sunday or want to revisit a message? Watch or listen to our latest sermons anytime.
+      Our weekly Sunday worship services are recorded and posted to our YouTube channel.
     </p>
-    <div class="media-frame mx-auto mt-8 aspect-video max-w-3xl">
+    <a href={contact.youtubeUrl} class="btn mt-8">Watch on YouTube</a>
+    <div class="media-frame mx-auto mt-10 aspect-video max-w-3xl">
       <Video base="/media/preaching" label="Preaching at Christ Central East Bay" />
     </div>
-    <p class="mx-auto mt-6 max-w-xl text-stone-600 dark:text-stone-300">
-      We’re getting our sermon library online. In the meantime, we’d love to see you on Sunday — or
-      <a href={`mailto:${contact.email}`} class="link-inline">reach out</a> and we’ll point you to
-      recent messages.
-    </p>
   </Section>
 
   {/* Contact — folded from its own page */}
@@ -142,6 +139,9 @@ const congregationLarge = await getImage({ src: congregation, width: 2800, forma
         <dt class="text-sm font-semibold uppercase tracking-wide text-stone-500 dark:text-stone-400">Social</dt>
         <dd class="mt-2">
           <a href={contact.instagramUrl} class="link-inline">{contact.socialHandle}</a>
+        </dd>
+        <dd class="mt-1">
+          <a href={contact.youtubeUrl} class="link-inline">YouTube</a>
         </dd>
       </div>
       <div>
