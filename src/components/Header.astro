@@ -1,7 +1,8 @@
 ---
 import { site, nav } from '../data/site';
 
-const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+// Pages are served at trailing-slash URLs (see trailingSlash in astro.config.mjs).
+const current = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 ---
 
 <header class="sticky top-0 z-40 bg-stone-800 text-white">
@@ -55,7 +56,7 @@ const current = Astro.url.pathname.replace(/\/$/, '') || '/';
           ))
         }
         <li class="mt-2 md:mt-0 md:pl-2">
-          <a href="/im-new" class="inline-block rounded-md bg-accent-200 px-5 py-2 text-sm font-bold text-stone-900 transition-colors hover:bg-accent-100">
+          <a href="/im-new/" class="inline-block rounded-md bg-accent-200 px-5 py-2 text-sm font-bold text-stone-900 transition-colors hover:bg-accent-100">
             Plan Your Visit
           </a>
         </li>

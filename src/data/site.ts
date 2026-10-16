@@ -126,9 +126,9 @@ export const ministries = [
 ] as const;
 
 export const nav = [
-  { label: 'About', href: '/about' },
-  { label: "I'm New", href: '/im-new' },
-  { label: 'Connect', href: '/connect' },
+  { label: 'About', href: '/about/' },
+  { label: "I'm New", href: '/im-new/' },
+  { label: 'Connect', href: '/connect/' },
   { label: 'Resources', href: '/#resources' },
   { label: 'Give', href: '/give' },
   { label: 'Contact', href: '/#contact' },
