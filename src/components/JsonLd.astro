@@ -1,0 +1,84 @@
+---
+/**
+ * schema.org structured data for the church, emitted on every page so search
+ * engines can tie the site to the Google Business Profile (same name, address
+ * and hours) and understand the weekly service as a recurring event.
+ * All values come from src/data/site.ts; nothing is hardcoded here.
+ */
+import { site, service, contact, links } from '../data/site';
+
+const origin = Astro.site ?? new URL(Astro.url.origin);
+const absolute = (path: string) => new URL(path, origin).href;
+const churchId = absolute('/#church');
+const organizationId = absolute('/#organization');
+
+// schema.org models a Church as a place (building, address, hours), so the
+// congregation itself is a separate Organization node that points at it.
+const church = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Church',
+      '@id': churchId,
+      name: site.name,
+      url: absolute('/'),
+      image: absolute('/images/staff-leadership.jpg'),
+      description: site.description,
+      address: { '@type': 'PostalAddress', ...service.postalAddress },
+      geo: { '@type': 'GeoCoordinates', ...service.geo },
+      hasMap: service.mapsPlaceUrl,
+      containedInPlace: { '@type': 'Place', name: service.venueName },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: `https://schema.org/${service.day}`,
+          opens: service.isoStartTime,
+          closes: service.isoEndTime,
+        },
+      ],
+      sameAs: [service.mapsPlaceUrl],
+    },
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: site.name,
+      alternateName: site.shortName,
+      url: absolute('/'),
+      logo: absolute('/images/cceb-logo-mark.png'),
+      image: absolute('/images/staff-leadership.jpg'),
+      description: site.description,
+      email: contact.email,
+      address: { '@type': 'PostalAddress', ...service.postalAddress },
+      location: { '@id': churchId },
+      sameAs: [contact.instagramUrl, contact.youtubeUrl, links.churchCenter, service.mapsPlaceUrl],
+      parentOrganization: {
+        '@type': 'Organization',
+        name: 'Christ Central Presbyterian Church',
+        url: links.christCentralSF,
+      },
+    },
+    {
+      '@type': 'Event',
+      '@id': absolute('/#sunday-service'),
+      name: `${service.day} Worship Service`,
+      description: `Weekly worship service at ${site.name}. ${service.kidsNote}`,
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      eventStatus: 'https://schema.org/EventScheduled',
+      isAccessibleForFree: true,
+      eventSchedule: {
+        '@type': 'Schedule',
+        byDay: `https://schema.org/${service.day}`,
+        startTime: service.isoStartTime,
+        endTime: service.isoEndTime,
+        scheduleTimezone: service.timeZone,
+        repeatFrequency: 'P1W',
+      },
+      location: { '@id': churchId },
+      organizer: { '@id': organizationId },
+      url: absolute('/im-new/'),
+    },
+  ],
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(church)} />
