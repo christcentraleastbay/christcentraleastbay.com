@@ -6,10 +6,18 @@
 
 const serviceTimeZone = 'America/Los_Angeles';
 const serviceStartTime = new Date('1970-01-04T10:00:00-08:00');
+const serviceEndTime = new Date('1970-01-04T11:30:00-08:00');
 const recommendedArrivalTime = new Date(serviceStartTime.getTime() - 15 * 60 * 1000);
 const timeFormatter = new Intl.DateTimeFormat('en-US', {
   hour: 'numeric',
   minute: '2-digit',
+  timeZone: serviceTimeZone,
+});
+// 24-hour "HH:MM" for machine-readable schedules (schema.org openingHours, Event).
+const isoTimeFormatter = new Intl.DateTimeFormat('en-US', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23',
   timeZone: serviceTimeZone,
 });
 
@@ -29,9 +37,26 @@ export const service = {
   day: 'Sunday',
   timeZone: serviceTimeZone,
   time: timeFormatter.format(serviceStartTime),
+  endTime: timeFormatter.format(serviceEndTime),
+  isoStartTime: isoTimeFormatter.format(serviceStartTime),
+  isoEndTime: isoTimeFormatter.format(serviceEndTime),
   recommendedArrivalTime: timeFormatter.format(recommendedArrivalTime),
   address: '1821 Catalina Ave, Berkeley, CA',
+  /** Structured address, kept in sync with `address`, for structured data. */
+  postalAddress: {
+    streetAddress: '1821 Catalina Ave',
+    addressLocality: 'Berkeley',
+    addressRegion: 'CA',
+    postalCode: '94707',
+    addressCountry: 'US',
+  },
+  /** Coordinates from the church's Google Business Profile listing. */
+  geo: { latitude: 37.8925418, longitude: -122.2795421 },
+  /** The building the church meets in (the sign out front says this name). */
+  venueName: 'Thousand Oaks Baptist Church',
   mapsUrl: 'https://maps.google.com/?q=1821+Catalina+Ave,+Berkeley,+CA',
+  /** Stable link to the church's own Google Maps listing (Business Profile). */
+  mapsPlaceUrl: 'https://www.google.com/maps?cid=3535235335754445150',
   kidsNote: 'Kids programs available!',
   refreshmentsNote: 'Light refreshments are offered before and after service.',
   parkingNote: 'There should be plenty of street parking around the church.',
@@ -46,7 +71,7 @@ export const contact = {
 } as const;
 
 export const links = {
-  christCentralSF: 'http://christcentralsf.com',
+  christCentralSF: 'https://www.christcentralsf.com/',
   churchCenter: 'https://christcentraleastbay.churchcenter.com/',
   westminsterStandards: 'https://westminsterstandards.org/',
 } as const;
