@@ -2,7 +2,7 @@
 /**
  * schema.org structured data for the church, emitted on every page so search
  * engines can tie the site to the Google Business Profile (same name, address
- * and hours) and understand the weekly service as a recurring event.
+ * and hours) and list the upcoming Sunday services as events on the I'm New page.
  * All values come from src/data/site.ts; nothing is hardcoded here.
  */
 import { site, service, contact, links } from '../data/site';
@@ -11,6 +11,15 @@ const origin = Astro.site ?? new URL(Astro.url.origin);
 const absolute = (path: string) => new URL(path, origin).href;
 const churchId = absolute('/#church');
 const organizationId = absolute('/#organization');
+
+/** "YYYY-MM-DD" for the next `count` Sundays from the build (UTC is ahead of Pacific). */
+function upcomingSundays(count: number) {
+  const today = new Date();
+  const daysToSunday = (7 - today.getUTCDay()) % 7;
+  return Array.from({ length: count }, (_, i) =>
+    new Date(today.getTime() + (daysToSunday + 7 * i) * 864e5).toISOString().slice(0, 10),
+  );
+}
 
 // schema.org models a Church as a place (building, address, hours), so the
 // congregation itself is a separate Organization node that points at it.
@@ -57,26 +66,31 @@ const church = {
         url: links.christCentralSF,
       },
     },
-    {
+    // Google needs a startDate on every Event and doesn't read eventSchedule,
+    // so the I'm New page lists the next few Sundays, counted from the build.
+    // Times have no UTC offset, so Google reads them in the location's time
+    // zone (Pacific, daylight saving included).
+    ...(Astro.url.pathname === '/im-new/' ? upcomingSundays(12) : []).map((date) => ({
       '@type': 'Event',
-      '@id': absolute('/#sunday-service'),
+      '@id': absolute(`/im-new/#service-${date}`),
       name: `${service.day} Worship Service`,
       description: `Weekly worship service at ${site.name}. ${service.kidsNote}`,
+      startDate: `${date}T${service.isoStartTime}`,
+      endDate: `${date}T${service.isoEndTime}`,
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       eventStatus: 'https://schema.org/EventScheduled',
       isAccessibleForFree: true,
-      eventSchedule: {
-        '@type': 'Schedule',
-        byDay: `https://schema.org/${service.day}`,
-        startTime: service.isoStartTime,
-        endTime: service.isoEndTime,
-        scheduleTimezone: service.timeZone,
-        repeatFrequency: 'P1W',
+      image: absolute('/images/staff-leadership.jpg'),
+      location: {
+        '@type': 'Church',
+        '@id': churchId,
+        name: site.name,
+        address: { '@type': 'PostalAddress', ...service.postalAddress },
       },
-      location: { '@id': churchId },
-      organizer: { '@id': organizationId },
+      organizer: { '@type': 'Organization', '@id': organizationId, name: site.name, url: absolute('/') },
+      offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', url: absolute('/im-new/') },
       url: absolute('/im-new/'),
-    },
+    })),
   ],
 };
 ---
