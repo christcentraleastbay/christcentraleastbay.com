@@ -49,6 +49,11 @@ Cloudflare Workers Builds is connected to the GitHub repository and uses:
 Pushes to `main` build and deploy automatically; pull requests get preview URLs.
 Pages are pre-rendered at build time and served as static assets from Cloudflare's edge.
 
+A separate Worker in [`workers/monthly-rebuild/`](./workers/monthly-rebuild/)
+rebuilds the site on the 1st of each month through a Workers Builds deploy hook,
+so build-time content such as upcoming Sunday dates stays current. See its
+README for setup.
+
 The apex-to-`www` and HTTP-to-HTTPS redirects are configured as Cloudflare zone
 rules. Site path redirects, such as `/give`, are version-controlled in
 [`public/_redirects`](./public/_redirects).

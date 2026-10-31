@@ -1,0 +1,23 @@
+// A separate, script-only Worker that rebuilds the site once a month.
+// It is deployed on its own from this folder (npx wrangler deploy) and is
+// not part of the site's Workers Builds build, which uses the root
+// wrangler.jsonc.
+{
+  "name": "christcentraleastbay-monthly-rebuild",
+  "main": "src/index.js",
+  "tsconfig": "./tsconfig.json",
+  "compatibility_date": "2026-07-03",
+
+  // No fetch handler, so no public URL is needed.
+  "workers_dev": false,
+  "preview_urls": false,
+
+  "triggers": {
+    // 09:00 UTC on the 1st of every month (1 or 2 AM in the Bay Area).
+    "crons": ["0 9 1 * *"]
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
