@@ -63,6 +63,37 @@ export const service = {
   locationNote: 'We are located in the main sanctuary.',
 } as const;
 
+/**
+ * Dated changes to the Sunday schedule, for the dated services listed in the
+ * structured data. Each entry applies from its date (a Sunday, "YYYY-MM-DD")
+ * until a later entry; dates before the first entry use `service` above.
+ * Times are local "HH:MM" (Pacific). The page text still comes from `service`.
+ */
+export const sundayScheduleChanges: ReadonlyArray<{
+  from: string;
+  services: ReadonlyArray<{ label: string; start: string; end: string }>;
+}> = [
+  // Second service launches Jan 31, 2027 (first 9:30, second 11:00).
+  // End times are placeholders until the church confirms them.
+  {
+    from: '2027-01-31',
+    services: [
+      { label: 'First Service', start: '09:30', end: '10:45' },
+      { label: 'Second Service', start: '11:00', end: '12:15' },
+    ],
+  },
+];
+
+/** The Sunday services on a given date ("YYYY-MM-DD"), schedule changes applied. */
+export function servicesOn(date: string) {
+  const change = [...sundayScheduleChanges].reverse().find((c) => c.from <= date);
+  return (
+    change?.services ?? [
+      { label: 'Worship Service', start: service.isoStartTime, end: service.isoEndTime },
+    ]
+  );
+}
+
 export const contact = {
   email: 'office@christcentraleastbay.com',
   socialHandle: '@Christcentraleastbay',

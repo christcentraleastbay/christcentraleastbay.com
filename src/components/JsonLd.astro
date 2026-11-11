@@ -5,7 +5,7 @@
  * and hours) and list the upcoming Sunday services as events on the I'm New page.
  * All values come from src/data/site.ts; nothing is hardcoded here.
  */
-import { site, service, contact, links } from '../data/site';
+import { site, service, contact, links, servicesOn } from '../data/site';
 
 const origin = Astro.site ?? new URL(Astro.url.origin);
 const absolute = (path: string) => new URL(path, origin).href;
@@ -70,13 +70,19 @@ const church = {
     // so the I'm New page lists the next few Sundays, counted from the build.
     // Times have no UTC offset, so Google reads them in the location's time
     // zone (Pacific, daylight saving included).
-    ...(Astro.url.pathname === '/im-new/' ? upcomingSundays(12) : []).map((date) => ({
+    // A Sunday with more than one service gets one Event per service.
+    ...(Astro.url.pathname === '/im-new/'
+      ? upcomingSundays(12).flatMap((date) =>
+          servicesOn(date).map((s, _, all) => ({ date, ...s, multi: all.length > 1 })),
+        )
+      : []
+    ).map(({ date, label, start, end, multi }) => ({
       '@type': 'Event',
-      '@id': absolute(`/im-new/#service-${date}`),
-      name: `${service.day} Worship Service`,
+      '@id': absolute(`/im-new/#service-${date}${multi ? `-${start.replace(':', '')}` : ''}`),
+      name: `${service.day} Worship Service${multi ? ` (${label})` : ''}`,
       description: `Weekly worship service at ${site.name}. ${service.kidsNote}`,
-      startDate: `${date}T${service.isoStartTime}`,
-      endDate: `${date}T${service.isoEndTime}`,
+      startDate: `${date}T${start}`,
+      endDate: `${date}T${end}`,
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       eventStatus: 'https://schema.org/EventScheduled',
       isAccessibleForFree: true,
